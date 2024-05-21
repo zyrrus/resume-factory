@@ -30,7 +30,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body
-        className={`font-sans ${montserrat.variable} ${splineSansMono.variable}`}
+        className={`font-sans ${montserrat.variable} ${splineSansMono.variable} selection:text-neutral-50 selection:bg-primary-500`}
       >
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
