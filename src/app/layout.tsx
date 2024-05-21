@@ -4,6 +4,7 @@ import { Spline_Sans_Mono, Montserrat } from "next/font/google";
 import { type PropsWithChildren } from "react";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "~/components/ui/sonner";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -30,9 +31,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body
-        className={`font-sans ${montserrat.variable} ${splineSansMono.variable} selection:text-neutral-50 selection:bg-primary-500`}
+        className={`font-sans ${montserrat.variable} ${splineSansMono.variable} text-neutral-950 selection:bg-primary-500 selection:text-neutral-50`}
       >
         <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Toaster />
       </body>
     </html>
   );

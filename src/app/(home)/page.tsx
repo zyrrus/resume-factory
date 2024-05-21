@@ -13,6 +13,7 @@ import {
   LuPencil,
   LuChevronDown,
 } from "react-icons/lu";
+import { Header } from "~/app/(home)/header";
 import {
   Accordion,
   AccordionContent,
@@ -21,12 +22,16 @@ import {
 } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
+import { CTA_LINK } from "~/lib/constants";
+
+// TODO: https://ui.aceternity.com/components/bento-grid
+// TODO: https://ui.aceternity.com/components/sticky-scroll-reveal
 
 export default async function Home() {
   return (
     <>
       <Header />
-      <main className="">
+      <main>
         <Hero />
         <ResumeCount count={0} />
         <About />
@@ -40,68 +45,24 @@ export default async function Home() {
   );
 }
 
-const Header: React.FC = () => {
-  return (
-    <header className="sticky top-0 z-50 w-full bg-white font-mono text-xl font-medium shadow-xl transition-all duration-300 ease-in-out">
-      <div className="mx-auto flex max-w-[1366px] flex-row justify-between gap-x-4 px-4 py-[20px]">
-        <Link href="/" className="flex flex-row items-center gap-x-[10px] ">
-          <LuFeather size="30px" />
-          <p className="">Resume Factory</p>
-        </Link>
-        <nav className="flex flex-row items-center gap-x-8 sm:gap-x-16">
-          <Link className="hover:text-accent transition-colors" href="#about">
-            About
-          </Link>
-          <Link className="hover:text-accent transition-colors" href="#faq">
-            FAQ
-          </Link>
-          <Link className="hover:text-accent transition-colors" href="/">
-            Blog
-          </Link>
-          <Link className="hover:text-accent transition-colors" href="/">
-            API
-          </Link>
-          <div className="flex flex-row gap-x-[20px]">
-            <Link
-              href="https://github.com/CB-BC/resume-factory"
-              target="_blank"
-            >
-              <LuGithub size="25px" />
-            </Link>
-            <LuMoon size="25px" />
-          </div>
-          <Link
-            href="/profile"
-            className="border-accent bg-accent text-bg hover:bg-bg hover:text-accent rounded border-2 px-[40px] py-[10px] shadow transition-colors"
-          >
-            Build Now
-          </Link>
-        </nav>
-      </div>
-    </header>
-  );
-};
-
 const Hero: React.FC = () => {
   return (
-    <div className="container">
-      <section className="mx-auto my-36 max-w-5xl">
-        <h1 className="mb-12 font-mono text-7xl font-bold">
-          Build tailored resumes without wasting time.
-        </h1>
-        <p className="text-fg-light mb-24 text-2xl leading-10">
-          Store all your past job experiences and projects in one place. Select
-          the relevant information from your career archive, and we’ll assemble
-          a polished, tailored resume that highlights your strengths and
-          impresses employers.
-        </p>
-        <div className="flex flex-row justify-end">
-          <Button asChild>
-            <Link href="/profile">Get started now</Link>
-          </Button>
-        </div>
-      </section>
-    </div>
+    <section className="container my-36 max-w-5xl">
+      <h1 className="mb-12 font-mono text-7xl font-bold">
+        Build tailored resumes without wasting time.
+      </h1>
+      <p className="mb-24 text-2xl leading-10 text-neutral-700">
+        Store all your past job experiences and projects in one place. Select
+        the relevant information from your career archive, and we’ll assemble a
+        polished, tailored resume that highlights your strengths and impresses
+        employers.
+      </p>
+      <div className="flex flex-row justify-end">
+        <Button asChild size="lg">
+          <Link href={CTA_LINK}>Get started now</Link>
+        </Button>
+      </div>
+    </section>
   );
 };
 
@@ -109,11 +70,11 @@ const ResumeCount: React.FC<{ count: number }> = ({ count }) => {
   return (
     <div className="container">
       <section className=" flex flex-row items-center justify-between gap-x-14">
-        <Separator className="bg-fg-light/25" />
-        <p className="text-fg-light min-w-max font-mono text-xl font-medium">
+        <Separator className="bg-neutral-700/25" />
+        <p className="min-w-max font-mono text-xl font-medium text-neutral-700">
           {count} resumes created so far
         </p>
-        <Separator className="bg-fg-light/25" />
+        <Separator className="bg-neutral-700/25" />
       </section>
       <Separator className="bg-bg mb-28" id="about" />
     </div>
@@ -138,7 +99,7 @@ const About: React.FC = () => {
               <h3 className="mb-3 font-mono text-2xl font-semibold">
                 Good resumes Take Time
               </h3>
-              <p className="text-fg-light text-xl leading-[1.5]">
+              <p className="text-xl leading-[1.5] text-neutral-700">
                 It takes a lot of time and effort to meticulously craft a
                 perfect, personalized resume tailored specifically to each job
                 application’s requirements.
@@ -148,7 +109,7 @@ const About: React.FC = () => {
               <h3 className="mb-3 font-mono text-2xl font-semibold">
                 No One likes wasting time
               </h3>
-              <p className="text-fg-light text-xl leading-[1.5]">
+              <p className="text-xl leading-[1.5] text-neutral-700">
                 Submitting generic resumes that fail to highlight your unique
                 skills and experiences often leaves applicants feeling
                 exhausted, frustrated, and even hopeless at times.
@@ -159,12 +120,12 @@ const About: React.FC = () => {
             <h3 className="mb-3 font-mono text-2xl font-semibold">
               How We Can Help
             </h3>
-            <p className="text-fg-light mb-3 text-xl leading-[1.5]">
+            <p className="mb-3 text-xl leading-[1.5] text-neutral-700">
               Resume Factory eliminates the need for endless rewrites. Our
               platform, empowers users to create highly customized resumes for
               every opportunity.
             </p>
-            <p className="text-fg-light text-xl leading-[1.5]">
+            <p className="text-xl leading-[1.5] text-neutral-700">
               We will store all your projects and job experiences in one place,
               so you can select which ones make you the ideal candidate for the
               job. Resume Factory will build a customized resume using one of
@@ -194,17 +155,17 @@ const Benefits: React.FC = () => {
           <BenefitsCard
             title="Enhanced efficiency"
             description="With all your experiences in one place, you can effortlessly select and customize relevant details, allowing you to focus on other crucial aspects of your job search."
-            icon={<LuLineChart size="90px" className="text-accent" />}
+            icon={<LuLineChart size="90px" className="text-primary-500" />}
           />
           <BenefitsCard
             title="Tailored for success"
             description="Each job opportunity is unique, and a one-size-fits-all resume may not cut it. Resume Factory allows you to effortlessly select and modify the information stored in your career archive."
-            icon={<LuPencil size="90px" className="text-accent" />}
+            icon={<LuPencil size="90px" className="text-primary-500" />}
           />
           <BenefitsCard
             title="Professional and polished"
             description="Our carefully designed resume templates and formatting options make it easy to create aesthetically pleasing resumes that make a lasting impression."
-            icon={<LuLayoutList size="90px" className="text-accent" />}
+            icon={<LuLayoutList size="90px" className="text-primary-500" />}
           />
         </div>
         <Separator className="bg-bg mb-28" id="features" />
@@ -278,7 +239,7 @@ const Features: React.FC = () => {
             <p className="text-2xl">
               Write once. Edit with ease. Reuse endlessly.
             </p>
-            <p className="text-fg-light text-xl">
+            <p className="text-xl text-neutral-700">
               We will take care of the rest
             </p>
           </div>
@@ -377,13 +338,13 @@ const Footer: React.FC = () => {
               ]}
             />
           </div>
-          <div className="bg-fg-light/25 w-[3px] rounded-full" />
+          <div className="w-[3px] rounded-full bg-neutral-700/25" />
           <div className="max-w-md pb-20 pl-16 pt-9">
             <LuFeather size="70px" />
             <p className="my-5 font-mono text-4xl font-semibold">
               Resume Factory
             </p>
-            <p className="text-fg-light text-xl leading-7">
+            <p className="text-xl leading-7 text-neutral-700">
               Get started off with a great resume. No need for any design
               knowledge, we build it for you!
             </p>
@@ -418,7 +379,7 @@ export const BenefitsCard: React.FC<BenefitsCardProps> = ({
         </h3>
         {icon}
       </div>
-      <p className="text-fg-light text-xl leading-[1.5]">{description}</p>
+      <p className="text-xl leading-[1.5] text-neutral-700">{description}</p>
     </div>
   );
 };
@@ -442,7 +403,7 @@ export const FAQItem: React.FC<FAQItemProps> = ({
       <AccordionTrigger className="flex w-full flex-row items-center justify-between font-mono">
         {question} <LuChevronDown size="25px" className="text-accent" />
       </AccordionTrigger>
-      <AccordionContent className="text-fg-light mt-4 leading-7">
+      <AccordionContent className="mt-4 leading-7 text-neutral-700">
         {answer}
       </AccordionContent>
     </AccordionItem>
