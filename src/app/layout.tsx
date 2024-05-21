@@ -1,12 +1,17 @@
 import "~/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Spline_Sans_Mono, Montserrat } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const splineSansMono = Spline_Sans_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 export const metadata = {
@@ -22,7 +27,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body
+        className={`font-sans ${montserrat.variable} ${splineSansMono.variable}`}
+      >
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
     </html>
