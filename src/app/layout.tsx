@@ -1,6 +1,7 @@
 import "~/styles/globals.css";
 
 import { Spline_Sans_Mono, Montserrat } from "next/font/google";
+import { type PropsWithChildren } from "react";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
@@ -20,11 +21,7 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body

@@ -24,17 +24,19 @@ import { Separator } from "~/components/ui/separator";
 
 export default async function Home() {
   return (
-    <main className="">
+    <>
       <Header />
-      <Hero />
-      <ResumeCount count={0} />
-      <About />
-      <Benefits />
-      <Features />
-      <FAQ />
-      <CTA />
+      <main className="">
+        <Hero />
+        <ResumeCount count={0} />
+        <About />
+        <Benefits />
+        <Features />
+        <FAQ />
+        <CTA />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }
 
