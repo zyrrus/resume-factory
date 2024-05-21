@@ -23,7 +23,6 @@ import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { CTA_LINK } from "~/lib/constants";
 
-// TODO: https://ui.aceternity.com/components/bento-grid
 // TODO: https://ui.aceternity.com/components/sticky-scroll-reveal
 
 export default async function Home() {
