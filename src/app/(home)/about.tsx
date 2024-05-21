@@ -12,7 +12,6 @@ import {
   BentoGridItem,
   type BentoGridItemProps,
 } from "~/components/ui/bento-grid";
-import { Skeleton } from "~/components/ui/skeleton";
 
 const items: BentoGridItemProps[] = [
   {
