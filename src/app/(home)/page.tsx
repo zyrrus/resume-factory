@@ -97,7 +97,7 @@ const BENEFITS = [
 ];
 const Benefits: React.FC = () => {
   return (
-    <section className="mt-44">
+    <section className="pt-44" id="benefits">
       <div className="container">
         <p className="mb-4 text-center font-mono font-bold text-primary-500">
           Benefits
@@ -156,7 +156,7 @@ const FEATURES = [
 ];
 const Features: React.FC = () => {
   return (
-    <section className="bg-[#F4F2F2] pb-24 pt-44">
+    <section className="bg-[#F4F2F2] pb-24 pt-44" id="features">
       <div className="container">
         <div className="ml-36">
           <p className="mb-4 font-mono font-bold text-primary-500">Features</p>
@@ -222,7 +222,7 @@ const FAQs = [
 ];
 const FAQ: React.FC = () => {
   return (
-    <section className="container mt-32">
+    <section className="container pt-32" id="faq">
       <p className="mb-4 text-center font-mono font-bold text-primary-500">
         FAQ
       </p>
