@@ -167,10 +167,10 @@ const Features: React.FC = () => {
             {FEATURES.map(({ title, Icon }) => (
               <div
                 key={title}
-                className="bg-bg shadow-card hover:bg-accent group w-[209px] rounded-lg p-6 transition-all duration-300 ease-in-out"
+                className="group w-[209px] rounded-lg bg-white p-6 shadow-xl transition-all duration-300 ease-in-out hover:bg-primary-500"
               >
-                <div className="group-hover:text-bg mb-4 flex flex-col items-center justify-between gap-4 transition-all">
-                  <Icon className="group-hover:text-bg h-24 w-24 text-primary-500 transition-all duration-300 ease-in-out" />
+                <div className="mb-4 flex flex-col items-center justify-between gap-4 transition-all group-hover:text-neutral-50">
+                  <Icon className="h-24 w-24 text-primary-500 transition-all duration-300 ease-in-out group-hover:text-neutral-50" />
                   <h3 className="max-w-fit text-balance text-center font-mono text-xl font-semibold leading-7">
                     {title}
                   </h3>
@@ -179,7 +179,7 @@ const Features: React.FC = () => {
             ))}
           </div>
           <div className="flex flex-col justify-center gap-5 font-mono">
-            <p className="text-fg text-4xl font-semibold">
+            <p className="text-4xl font-semibold">
               Your achievements all in one place
             </p>
             <p className="text-2xl">
