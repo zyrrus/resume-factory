@@ -30,7 +30,7 @@ export default async function Home() {
       <Header />
       <main>
         <Hero />
-        <ResumeCount count={2505} />
+        <ResumeCount count={2506} />
         <About />
         <Benefits />
         <Features />
