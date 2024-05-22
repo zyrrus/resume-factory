@@ -29,7 +29,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={`font-sans ${montserrat.variable} ${splineSansMono.variable} text-neutral-950 selection:bg-primary-500 selection:text-neutral-50`}
       >
