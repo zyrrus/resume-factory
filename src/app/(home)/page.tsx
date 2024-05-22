@@ -9,7 +9,6 @@ import {
   LuLayoutTemplate,
   LuFileArchive,
   LuPencil,
-  LuChevronDown,
 } from "react-icons/lu";
 import { About } from "~/app/(home)/about";
 import { Header } from "~/app/(home)/header";
@@ -46,10 +45,10 @@ export default async function Home() {
 const Hero: React.FC = () => {
   return (
     <section className="container my-36 max-w-5xl">
-      <h1 className="font-mono text-7xl font-bold leading-tight">
+      <h1 className="font-mono text-6xl font-bold leading-tight">
         Build tailored resumes without <span className="">wasting time</span>.
       </h1>
-      <p className="mt-12 text-2xl leading-10 text-neutral-700">
+      <p className="mt-10 text-xl leading-relaxed text-neutral-700">
         Piece together a tailored resume by selecting your most relevant career
         achievements, skills, projects, and education from your CV, and we’ll
         assemble a tailored resume PDF that highlights your strengths and
@@ -76,96 +75,108 @@ const ResumeCount: React.FC<{ count: number }> = ({ count }) => {
   );
 };
 
+const BENEFITS = [
+  {
+    title: "Enhanced efficiency",
+    description:
+      "With all your experiences in one place, you can effortlessly select and customize relevant details, allowing you to focus on other crucial aspects of your job search.",
+    icon: <LuLineChart className="h-24 w-24 text-primary-500" />,
+  },
+  {
+    title: "Tailored for success",
+    description:
+      "Each job opportunity is unique, and a one-size-fits-all resume may not cut it. Resume Factory allows you to effortlessly select and modify the information stored in your career archive.",
+    icon: <LuPencil className="h-24 w-24 text-primary-500" />,
+  },
+  {
+    title: "Professional and polished",
+    description:
+      "Our carefully designed resume templates and formatting options make it easy to create aesthetically pleasing resumes that make a lasting impression.",
+    icon: <LuLayoutList className="h-24 w-24 text-primary-500" />,
+  },
+];
 const Benefits: React.FC = () => {
   return (
-    <div className="container mt-44">
-      <section>
-        <p className="text-accent mb-4 text-center font-mono text-base font-bold">
+    <section className="mt-44">
+      <div className="container">
+        <p className="mb-4 text-center font-mono font-bold text-primary-500">
           Benefits
         </p>
-        <h2 className="mb-12 text-center font-mono text-5xl font-bold">
+        <h2 className="mb-12 text-center font-mono text-4xl font-bold">
           Optimize your job search
         </h2>
-        <div className=" mb-40 flex flex-row justify-center gap-8">
-          <BenefitsCard
-            title="Enhanced efficiency"
-            description="With all your experiences in one place, you can effortlessly select and customize relevant details, allowing you to focus on other crucial aspects of your job search."
-            icon={<LuLineChart size="90px" className="text-primary-500" />}
-          />
-          <BenefitsCard
-            title="Tailored for success"
-            description="Each job opportunity is unique, and a one-size-fits-all resume may not cut it. Resume Factory allows you to effortlessly select and modify the information stored in your career archive."
-            icon={<LuPencil size="90px" className="text-primary-500" />}
-          />
-          <BenefitsCard
-            title="Professional and polished"
-            description="Our carefully designed resume templates and formatting options make it easy to create aesthetically pleasing resumes that make a lasting impression."
-            icon={<LuLayoutList size="90px" className="text-primary-500" />}
-          />
+      </div>
+      <div className="relative">
+        {/* Half background */}
+        <div className="absolute inset-0 top-1/2 -z-50 bg-[#F4F2F2]" />
+        <div className="container flex flex-col items-center gap-8 lg:flex-row lg:items-stretch">
+          {BENEFITS.map(({ title, description, icon }) => (
+            <div
+              key={title}
+              className="max-w-sm rounded-lg bg-white p-6 shadow-2xl"
+            >
+              <div className="mb-4 flex flex-row items-end justify-between">
+                <h3 className="text-balance font-mono text-2xl font-semibold leading-8">
+                  {title}
+                </h3>
+                {icon}
+              </div>
+              <p className="text-lg leading-normal text-neutral-700">
+                {description}
+              </p>
+            </div>
+          ))}
         </div>
-        <Separator className="bg-bg mb-28" id="features" />
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
+const FEATURES = [
+  {
+    title: "Career archive",
+    Icon: LuArchive,
+  },
+  {
+    title: "Dynamic editing",
+    Icon: LuFileEdit,
+  },
+  {
+    title: "Real-time preview",
+    Icon: LuEye,
+  },
+  {
+    title: "Professional templates",
+    Icon: LuLayoutTemplate,
+  },
+  {
+    title: "Privacy and security",
+    Icon: LuFileArchive,
+  },
+];
 const Features: React.FC = () => {
   return (
-    <div className="container">
-      <section className="mb-40">
+    <section className="bg-[#F4F2F2] pb-24 pt-44">
+      <div className="container">
         <div className="ml-36">
-          <p className="text-accent mb-4 font-mono text-base font-bold">
-            Features
-          </p>
-          <h2 className="mb-11 font-mono text-5xl font-bold">What to expect</h2>
+          <p className="mb-4 font-mono font-bold text-primary-500">Features</p>
+          <h2 className="mb-12 font-mono text-4xl font-bold">What to expect</h2>
         </div>
         <div className="flex flex-row justify-between gap-14">
           <div className="flex max-w-2xl flex-row flex-wrap justify-end gap-4">
-            <FeaturesCard
-              title="Career archive"
-              icon={
-                <LuArchive
-                  size="90px"
-                  className="text-accent group-hover:text-bg transition-all duration-300 ease-in-out"
-                />
-              }
-            />
-            <FeaturesCard
-              title="Dynamic editing"
-              icon={
-                <LuFileEdit
-                  size="90px"
-                  className="text-accent group-hover:text-bg transition-all duration-300 ease-in-out"
-                />
-              }
-            />
-            <FeaturesCard
-              title="Real-time preview"
-              icon={
-                <LuEye
-                  size="90px"
-                  className="text-accent group-hover:text-bg transition-all duration-300 ease-in-out"
-                />
-              }
-            />
-            <FeaturesCard
-              title="Professional templates"
-              icon={
-                <LuLayoutTemplate
-                  size="90px"
-                  className="text-accent group-hover:text-bg transition-all duration-300 ease-in-out"
-                />
-              }
-            />
-            <FeaturesCard
-              title="Privacy and security"
-              icon={
-                <LuFileArchive
-                  size="90px"
-                  className="text-accent group-hover:text-bg transition-all duration-300 ease-in-out"
-                />
-              }
-            />
+            {FEATURES.map(({ title, Icon }) => (
+              <div
+                key={title}
+                className="bg-bg shadow-card hover:bg-accent group w-[209px] rounded-lg p-6 transition-all duration-300 ease-in-out"
+              >
+                <div className="group-hover:text-bg mb-4 flex flex-col items-center justify-between gap-4 transition-all">
+                  <Icon className="group-hover:text-bg h-24 w-24 text-primary-500 transition-all duration-300 ease-in-out" />
+                  <h3 className="max-w-fit text-balance text-center font-mono text-xl font-semibold leading-7">
+                    {title}
+                  </h3>
+                </div>
+              </div>
+            ))}
           </div>
           <div className="flex flex-col justify-center gap-5 font-mono">
             <p className="text-fg text-4xl font-semibold">
@@ -179,58 +190,70 @@ const Features: React.FC = () => {
             </p>
           </div>
         </div>
-        <Separator className="bg-bg mb-28" id="faq" />
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
+const FAQs = [
+  {
+    question: "Can I create multiple resumes for different career paths?",
+    answer:
+      "Yes you can! When listing qualifications you can pick and choose which will be used in the final product. If you don't think it will be necessary for a certain job type, you can store it for later use.",
+    value: "faq-1",
+  },
+  {
+    question: "Does it cost money?",
+    answer:
+      "Not at all! This is a project for personal use and requires nothing other than your input.",
+    value: "faq-2",
+  },
+  {
+    question: "How many resume options are there?",
+    answer:
+      "I plan to have 3 available templates. One for general use and two for computer science related fields.",
+    value: "faq-3",
+  },
+  {
+    question: "The colors are a little too bright at night. Can I change them?",
+    answer: "Select the moon right by the sign up button to enable dark mode.",
+    value: "faq-4",
+  },
+];
 const FAQ: React.FC = () => {
   return (
-    <section className="mb-72">
-      <p className="text-accent mb-4 text-center font-mono text-base font-bold">
+    <section className="container mt-32">
+      <p className="mb-4 text-center font-mono font-bold text-primary-500">
         FAQ
       </p>
-      <h2 className="mb-12 text-center font-mono text-5xl font-bold">
+      <h2 className="mb-12 text-center font-mono text-4xl font-bold">
         Frequently asked questions
       </h2>
-      <div className="m-auto flex w-[908px] flex-col p-5">
-        <Accordion type="single" collapsible>
-          <FAQItem
-            question="Can I create multiple resumes for different career paths?"
-            answer="Yes you can! When listing qualifications you can pick and choose which will be used in the final product. If you don't think it will be necessary for a certain job type, you can store it for later use."
-            value="item-1"
-          />
-          <FAQItem
-            question="Does it cost money?"
-            answer="Not at all! This is a project for personal use and requires nothing other than your input."
-            value="item-2"
-          />
-          <FAQItem
-            question="How many resume options are there?"
-            answer="I plan to have 3 available templates. One for general use and two for computer science related fields."
-            value="item-3"
-          />
-          <FAQItem
-            question="This colors are a little too bright at night. Can I change them?"
-            answer="Select the moon right by the sign up button to enable dark mode."
-            value="item-4"
-          />
-        </Accordion>
-      </div>
+      <Accordion
+        type="single"
+        collapsible
+        className="mx-auto flex max-w-4xl flex-col gap-y-5 py-5"
+      >
+        {FAQs.map(({ question, answer, value }) => (
+          <AccordionItem key={value} value={value}>
+            <AccordionTrigger>{question}</AccordionTrigger>
+            <AccordionContent>{answer}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </section>
   );
 };
 
 const CTA: React.FC = () => {
   return (
-    <div className=" bg-bg-dark py-20">
-      <div className="mx-auto flex max-w-5xl flex-row items-center justify-between">
-        <p className="font-mono text-3xl font-semibold">
-          Land your next job interview <br /> with the perfect resume.
+    <div className="mt-44 bg-[#F4F2F2] py-16">
+      <div className="container mx-auto flex max-w-5xl flex-row items-center justify-between">
+        <p className="w-1/2 text-balance font-mono text-2xl font-semibold">
+          Land your next job interview with the perfect resume.
         </p>
-        <Button asChild>
-          <Link href="/profile">Get started now</Link>
+        <Button asChild size="lg">
+          <Link href={CTA_LINK}>Get started now</Link>
         </Button>
       </div>
     </div>
@@ -239,10 +262,11 @@ const CTA: React.FC = () => {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-bg-darker">
+    <footer className="bg-[#EAE6E6]">
       <div className="container">
-        <div className="ml-36 flex flex-row items-stretch justify-center py-36">
-          <div className="flex flex-row justify-between gap-20 pr-20 pt-10">
+        <div className="flex flex-row items-stretch justify-center gap-x-16 py-36">
+          {/* Links */}
+          <div className="grid grid-cols-3 gap-x-20 pr-20 pt-10">
             <FooterColumn
               mainLink={{ label: "Home", url: "/" }}
               subLinks={[
@@ -264,98 +288,38 @@ const Footer: React.FC = () => {
             <FooterColumn
               mainLink={{ label: "Home", url: "/" }}
               subLinks={[
-                { label: "API", url: "/" },
+                // { label: "API", url: "/" },
                 {
                   label: "GitHub",
-                  // Need to add href target _blank, -> FooterColumn
-                  url: "https://github.com/CB-BC/resume-factory",
+                  url: "https://github.com/zyrrus/resume-factory",
                 },
               ]}
             />
           </div>
-          <div className="w-[3px] rounded-full bg-neutral-700/25" />
-          <div className="max-w-md pb-20 pl-16 pt-9">
+
+          <Separator orientation="vertical" className="h-auto bg-neutral-400" />
+
+          {/* Branding + description */}
+          <div className="max-w-md pb-16 pt-9">
             <LuFeather size="70px" />
             <p className="my-5 font-mono text-4xl font-semibold">
               Resume Factory
             </p>
-            <p className="text-xl leading-7 text-neutral-700">
+            <p className="text-lg text-neutral-700">
               Get started off with a great resume. No need for any design
               knowledge, we build it for you!
             </p>
           </div>
         </div>
       </div>
-      <div className="bg-bg-darkest py-7">
-        <p className="text-bg text-center font-mono font-semibold">
+
+      {/* Copyright */}
+      <div className="bg-neutral-900 py-7">
+        <p className="text-center font-mono text-sm font-medium text-neutral-50">
           © 2024 Resume Factory. All rights reserved.
         </p>
       </div>
     </footer>
-  );
-};
-
-interface BenefitsCardProps {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
-const BenefitsCard: React.FC<BenefitsCardProps> = ({
-  description,
-  icon,
-  title,
-}) => {
-  return (
-    <div className="bg-bg shadow-card max-w-sm rounded-lg p-6">
-      <div className="mb-4 flex flex-row items-end justify-between">
-        <h3 className="font-mono text-2xl font-semibold leading-8 [text-wrap:balance]">
-          {title}
-        </h3>
-        {icon}
-      </div>
-      <p className="text-xl leading-[1.5] text-neutral-700">{description}</p>
-    </div>
-  );
-};
-
-interface FAQItemProps {
-  question: string;
-  answer: string;
-  value: string;
-}
-
-const FAQItem: React.FC<FAQItemProps> = ({ question, answer, value }) => {
-  return (
-    <AccordionItem
-      className="bg-bg shadow-card mx-auto mb-5 w-[908px] rounded p-5 text-xl"
-      value={value}
-    >
-      <AccordionTrigger className="flex w-full flex-row items-center justify-between font-mono">
-        {question} <LuChevronDown size="25px" className="text-accent" />
-      </AccordionTrigger>
-      <AccordionContent className="mt-4 leading-7 text-neutral-700">
-        {answer}
-      </AccordionContent>
-    </AccordionItem>
-  );
-};
-
-interface FeaturesCardProps {
-  title: string;
-  icon: React.ReactNode;
-}
-
-const FeaturesCard: React.FC<FeaturesCardProps> = ({ icon, title }) => {
-  return (
-    <div className="bg-bg shadow-card hover:bg-accent group w-[209px] rounded-lg p-6 transition-all duration-300 ease-in-out">
-      <div className="group-hover:text-bg mb-4 flex flex-col items-center justify-between gap-4 transition-all">
-        {icon}
-        <h3 className="max-w-fit text-center font-mono text-xl font-semibold leading-7 [text-wrap:balance]">
-          {title}
-        </h3>
-      </div>
-    </div>
   );
 };
 
@@ -371,14 +335,23 @@ interface FooterColumnProps {
 
 const FooterColumn: React.FC<FooterColumnProps> = ({ mainLink, subLinks }) => {
   return (
-    <div className="flex flex-col gap-2 text-xl">
-      <Link className="font-mono font-semibold" href={mainLink.url}>
-        {mainLink.label}
-      </Link>
-      {subLinks.map((link, index) => (
-        <Link href={link.url} key={index}>
-          {link.label}
-        </Link>
+    <div className="flex flex-col gap-y-1">
+      <Button
+        asChild
+        variant="link"
+        className="w-min justify-start text-base font-semibold"
+      >
+        <Link href={mainLink.url}>{mainLink.label}</Link>
+      </Button>
+      {subLinks.map((link) => (
+        <Button
+          key={link.label}
+          asChild
+          variant="link"
+          className="w-min justify-start"
+        >
+          <Link href={link.url}>{link.label}</Link>
+        </Button>
       ))}
     </div>
   );

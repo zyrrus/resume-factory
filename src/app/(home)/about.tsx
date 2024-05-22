@@ -15,13 +15,15 @@ import {
 
 const items: BentoGridItemProps[] = [
   {
-    title: "The Dawn of Innovation",
-    description: "Explore the birth of groundbreaking ideas and inventions.",
+    title: "Time Efficiency",
+    description:
+      "Save valuable time by generating tailored resumes quickly and easily. Resume Factory eliminates the need for juggling dozens of resume files, allowing you to focus more on your job search.",
     icon: <LuClipboardCopy className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Digital Revolution",
-    description: "Dive into the transformative power of technology.",
+    title: "Time Efficiency",
+    description:
+      "Say goodbye to hours spent manually editing your resume for every job application. With Resume Factory, you can quickly generate multiple tailored resumes in just a few clicks.",
     icon: <LuFile className="h-4 w-4 text-neutral-500" />,
   },
   {
@@ -46,7 +48,7 @@ const items: BentoGridItemProps[] = [
     icon: <LuAlignStartHorizontal className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Spirit of Adventure",
+    title: "Optimized for ATS",
     description: "Embark on exciting journeys and thrilling discoveries.",
     icon: (
       <LuAlignHorizontalDistributeCenter className="h-4 w-4 text-neutral-500" />
@@ -56,12 +58,12 @@ const items: BentoGridItemProps[] = [
 
 export const About: React.FC = () => {
   return (
-    <section className="container mt-20 max-w-6xl">
+    <section className="container mt-44 max-w-6xl">
       <div className="mx-auto">
         <p className="mb-4 font-mono text-base font-bold text-primary-500">
           About
         </p>
-        <h2 className="mb-11 font-mono text-5xl font-bold">
+        <h2 className="mb-12 font-mono text-4xl font-bold">
           Why use Resume Factory?
         </h2>
       </div>
