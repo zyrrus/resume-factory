@@ -1,16 +1,7 @@
 import Link from "next/link";
-import {
-  LuFeather,
-  LuLineChart,
-  LuLayoutList,
-  LuArchive,
-  LuFileEdit,
-  LuEye,
-  LuLayoutTemplate,
-  LuFileArchive,
-  LuPencil,
-} from "react-icons/lu";
+import { LuFeather, LuLineChart, LuLayoutList, LuPencil } from "react-icons/lu";
 import { About } from "~/app/(home)/about";
+import { Features } from "~/app/(home)/features";
 import { Header } from "~/app/(home)/header";
 import {
   Accordion,
@@ -21,8 +12,6 @@ import {
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { CTA_LINK } from "~/lib/constants";
-
-// TODO: https://ui.aceternity.com/components/sticky-scroll-reveal
 
 export default async function Home() {
   return (
@@ -132,69 +121,6 @@ const Benefits: React.FC = () => {
   );
 };
 
-const FEATURES = [
-  {
-    title: "Career archive",
-    Icon: LuArchive,
-  },
-  {
-    title: "Dynamic editing",
-    Icon: LuFileEdit,
-  },
-  {
-    title: "Real-time preview",
-    Icon: LuEye,
-  },
-  {
-    title: "Professional templates",
-    Icon: LuLayoutTemplate,
-  },
-  {
-    title: "Privacy and security",
-    Icon: LuFileArchive,
-  },
-];
-const Features: React.FC = () => {
-  return (
-    <section className="bg-[#F4F2F2] pb-24 pt-44" id="features">
-      <div className="container">
-        <div className="ml-36">
-          <p className="mb-4 font-mono font-bold text-primary-500">Features</p>
-          <h2 className="mb-12 font-mono text-4xl font-bold">What to expect</h2>
-        </div>
-        <div className="flex flex-row justify-between gap-14">
-          <div className="flex max-w-2xl flex-row flex-wrap justify-end gap-4">
-            {FEATURES.map(({ title, Icon }) => (
-              <div
-                key={title}
-                className="group w-[209px] rounded-lg bg-white p-6 shadow-xl transition-all duration-300 ease-in-out hover:bg-primary-500"
-              >
-                <div className="mb-4 flex flex-col items-center justify-between gap-4 transition-all group-hover:text-neutral-50">
-                  <Icon className="h-24 w-24 text-primary-500 transition-all duration-300 ease-in-out group-hover:text-neutral-50" />
-                  <h3 className="max-w-fit text-balance text-center font-mono text-xl font-semibold leading-7">
-                    {title}
-                  </h3>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-col justify-center gap-5 font-mono">
-            <p className="text-4xl font-semibold">
-              Your achievements all in one place
-            </p>
-            <p className="text-2xl">
-              Write once. Edit with ease. Reuse endlessly.
-            </p>
-            <p className="text-xl text-neutral-700">
-              We will take care of the rest
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const FAQs = [
   {
     question: "Can I create multiple resumes for different career paths?",
@@ -247,7 +173,7 @@ const FAQ: React.FC = () => {
 
 const CTA: React.FC = () => {
   return (
-    <div className="mt-44 bg-[#F4F2F2] py-16">
+    <div className="mt-44 bg-[#F4F2F2] py-12">
       <div className="container mx-auto flex max-w-5xl flex-row items-center justify-between">
         <p className="w-1/2 text-balance font-mono text-2xl font-semibold">
           Land your next job interview with the perfect resume.
@@ -264,7 +190,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#EAE6E6]">
       <div className="container">
-        <div className="flex flex-row items-stretch justify-center gap-x-16 py-36">
+        <div className="flex flex-row items-stretch justify-center gap-x-16 py-24">
           {/* Links */}
           <div className="grid grid-cols-3 gap-x-20 pr-20 pt-10">
             <FooterColumn
@@ -286,7 +212,7 @@ const Footer: React.FC = () => {
               ]}
             />
             <FooterColumn
-              mainLink={{ label: "Home", url: "/" }}
+              mainLink={{ label: "Dev" }}
               subLinks={[
                 // { label: "API", url: "/" },
                 {
@@ -325,7 +251,7 @@ const Footer: React.FC = () => {
 
 interface FooterLink {
   label: string;
-  url: string;
+  url?: string;
 }
 
 interface FooterColumnProps {
@@ -334,6 +260,7 @@ interface FooterColumnProps {
 }
 
 const FooterColumn: React.FC<FooterColumnProps> = ({ mainLink, subLinks }) => {
+  const MainComp = mainLink.url ? Link : "p";
   return (
     <div className="flex flex-col gap-y-1">
       <Button
@@ -341,18 +268,21 @@ const FooterColumn: React.FC<FooterColumnProps> = ({ mainLink, subLinks }) => {
         variant="link"
         className="w-min justify-start text-base font-semibold"
       >
-        <Link href={mainLink.url}>{mainLink.label}</Link>
+        <MainComp href={mainLink.url ?? ""}>{mainLink.label}</MainComp>
       </Button>
-      {subLinks.map((link) => (
-        <Button
-          key={link.label}
-          asChild
-          variant="link"
-          className="w-min justify-start"
-        >
-          <Link href={link.url}>{link.label}</Link>
-        </Button>
-      ))}
+      {subLinks.map((link) => {
+        const Comp = link.url ? Link : "p";
+        return (
+          <Button
+            key={link.label}
+            asChild
+            variant="link"
+            className="w-min justify-start"
+          >
+            <Comp href={link.url ?? ""}>{link.label}</Comp>
+          </Button>
+        );
+      })}
     </div>
   );
 };
