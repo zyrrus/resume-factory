@@ -58,7 +58,10 @@ export const About = () => {
           ))}
         </ol>
       </div>
+      {/* Desktop */}
       <Laptop scrollYProgress={scrollYProgress} />
+      {/* Mobile */}
+      <StaticLaptop />
     </div>
   );
 };
@@ -74,7 +77,7 @@ const Laptop = ({
   const rotateX = useTransform(scrollYProgress, [0.08, 0.25], [-70, 0]);
 
   return (
-    <div className="relative mx-auto mt-20 aspect-[12/11] w-full max-w-lg [perspective:1400px] lg:mr-0">
+    <div className="relative mx-auto mt-20 hidden aspect-[12/11] w-full max-w-lg [perspective:1400px] md:block lg:mr-0">
       <Image src="/images/home/laptop.svg" alt="" className="" fill />
       <motion.div
         style={{
@@ -82,6 +85,30 @@ const Laptop = ({
           scaleY,
           rotateX,
           translateY,
+          transformStyle: "preserve-3d",
+          transformOrigin: "top",
+        }}
+        className="relative mx-auto mt-[9%] aspect-[4/3] h-auto w-[92%] overflow-hidden rounded-lg border border-[#272729]"
+      >
+        <Image
+          src="/images/home/cv-demo.png"
+          alt="Resume Factory demo"
+          className="object-contain object-top"
+          fill
+        />
+      </motion.div>
+    </div>
+  );
+};
+
+const StaticLaptop = () => {
+  return (
+    <div className="relative mx-auto mt-20 aspect-[12/11] w-full max-w-lg [perspective:1400px] md:hidden lg:mr-0">
+      <Image src="/images/home/laptop.svg" alt="" className="" fill />
+      <motion.div
+        style={{
+          scaleY: 0.9,
+          rotateX: -70,
           transformStyle: "preserve-3d",
           transformOrigin: "top",
         }}

@@ -58,8 +58,8 @@ const FEATURES: BentoGridItemProps[] = [
 export const Features: React.FC = () => {
   return (
     <section className="bg-[#F4F2F2] pb-32 pt-44" id="features">
-      <div className="container">
-        <div className="ml-36">
+      <div className="container max-w-5xl">
+        <div className="md:ml-20">
           <p className="mb-4 font-mono font-bold text-primary-500">Features</p>
           <h2 className="mb-12 font-mono text-4xl font-bold">What to expect</h2>
         </div>
