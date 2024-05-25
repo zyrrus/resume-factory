@@ -33,11 +33,11 @@ export default async function Home() {
 
 const Hero: React.FC = () => {
   return (
-    <section className="container my-36 max-w-5xl">
-      <h1 className="font-mono text-6xl font-bold leading-tight">
-        Build tailored resumes without <span className="">wasting time</span>.
+    <section className="container my-20 max-w-5xl md:my-36">
+      <h1 className="text-balance font-mono text-4xl font-bold leading-tight md:text-6xl">
+        Build tailored resumes without wasting time.
       </h1>
-      <p className="mt-10 text-xl leading-relaxed text-neutral-700">
+      <p className="mt-10 text-base leading-relaxed text-neutral-700 sm:text-xl">
         Piece together a tailored resume by selecting your most relevant career
         achievements, skills, projects, and education from your CV, and we’ll
         assemble a tailored resume PDF that highlights your strengths and
@@ -56,7 +56,7 @@ const ResumeCount: React.FC<{ count: number }> = ({ count }) => {
   return (
     <section className="container mt-44 flex flex-row items-center gap-x-14">
       <Separator className="shrink bg-neutral-100" />
-      <span className="min-w-max font-mono text-xl font-medium text-neutral-700">
+      <span className="min-w-40 text-center font-mono text-sm font-medium text-neutral-700 sm:min-w-max md:text-xl">
         {count} resumes created so far
       </span>
       <Separator className="shrink bg-neutral-100" />
@@ -69,19 +69,23 @@ const BENEFITS = [
     title: "Enhanced efficiency",
     description:
       "With all your experiences in one place, you can effortlessly select and customize relevant details, allowing you to focus on other crucial aspects of your job search.",
-    icon: <LuLineChart className="h-24 w-24 text-primary-500" />,
+    icon: (
+      <LuLineChart className="h-16 w-16 text-primary-500 sm:h-24 sm:w-24" />
+    ),
   },
   {
     title: "Tailored for success",
     description:
       "Each job opportunity is unique, and a one-size-fits-all resume may not cut it. Resume Factory allows you to effortlessly select and modify the information stored in your career archive.",
-    icon: <LuPencil className="h-24 w-24 text-primary-500" />,
+    icon: <LuPencil className="h-16 w-16 text-primary-500 sm:h-24 sm:w-24" />,
   },
   {
     title: "Professional and polished",
     description:
       "Our carefully designed resume templates and formatting options make it easy to create aesthetically pleasing resumes that make a lasting impression.",
-    icon: <LuLayoutList className="h-24 w-24 text-primary-500" />,
+    icon: (
+      <LuLayoutList className="h-16 w-16 text-primary-500 sm:h-24 sm:w-24" />
+    ),
   },
 ];
 const Benefits: React.FC = () => {
@@ -105,12 +109,12 @@ const Benefits: React.FC = () => {
               className="max-w-sm rounded-lg bg-white p-6 shadow-2xl"
             >
               <div className="mb-4 flex flex-row items-end justify-between">
-                <h3 className="text-balance font-mono text-2xl font-semibold leading-8">
+                <h3 className="text-balance font-mono text-lg font-semibold leading-8 md:text-2xl">
                   {title}
                 </h3>
                 {icon}
               </div>
-              <p className="text-lg leading-normal text-neutral-700">
+              <p className="text-base leading-normal text-neutral-700 sm:text-lg">
                 {description}
               </p>
             </div>
@@ -174,8 +178,8 @@ const FAQ: React.FC = () => {
 const CTA: React.FC = () => {
   return (
     <div className="mt-44 bg-[#F4F2F2] py-12">
-      <div className="container mx-auto flex max-w-5xl flex-row items-center justify-between">
-        <p className="w-1/2 text-balance font-mono text-2xl font-semibold">
+      <div className="container mx-auto flex max-w-5xl flex-col items-center justify-between gap-y-4 sm:flex-row">
+        <p className="text-balance text-center font-mono text-2xl font-semibold md:w-1/2">
           Land your next job interview with the perfect resume.
         </p>
         <Button asChild size="lg">
@@ -190,9 +194,9 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#EAE6E6]">
       <div className="container">
-        <div className="flex flex-row items-stretch justify-center gap-x-16 py-24">
+        <div className="flex flex-col items-stretch justify-center gap-x-16 gap-y-8 py-8 md:flex-row md:py-24">
           {/* Links */}
-          <div className="grid grid-cols-3 gap-x-20 pr-20 pt-10">
+          <div className="grid gap-x-20 gap-y-8 pr-20 pt-10 sm:grid-cols-3">
             <FooterColumn
               mainLink={{ label: "Home", url: "/" }}
               subLinks={[
@@ -219,19 +223,27 @@ const Footer: React.FC = () => {
                   label: "GitHub",
                   url: "https://github.com/zyrrus/resume-factory",
                 },
+                {
+                  label: "Kitchen Sink",
+                  url: "/kitchen-sink",
+                },
               ]}
             />
           </div>
 
-          <Separator orientation="vertical" className="h-auto bg-neutral-400" />
+          <Separator
+            orientation="vertical"
+            className="hidden h-auto md:block"
+          />
+          <Separator orientation="horizontal" className="md:hidden" />
 
           {/* Branding + description */}
-          <div className="max-w-md pb-16 pt-9">
+          <div className="max-w-md pb-16 md:pt-9">
             <LuFeather size="70px" />
-            <p className="my-5 font-mono text-4xl font-semibold">
+            <p className="my-3 font-mono text-2xl font-semibold md:my-5 md:text-4xl">
               Resume Factory
             </p>
-            <p className="text-lg text-neutral-700">
+            <p className="text-base text-neutral-700 md:text-lg">
               Get started off with a great resume. No need for any design
               knowledge, we build it for you!
             </p>

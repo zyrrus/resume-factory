@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
           </Button>
         </div>
 
-        <nav className="flex flex-row items-center gap-x-8">
+        <nav className="hidden flex-row items-center gap-x-2 sm:flex md:gap-x-8">
           {/* Main Links */}
           <div className="flex flex-row gap-x-2">
             {HEADER_LINKS.map(({ label, url }) => (
