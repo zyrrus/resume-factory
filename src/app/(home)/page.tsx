@@ -55,11 +55,11 @@ const Hero: React.FC = () => {
 const ResumeCount: React.FC<{ count: number }> = ({ count }) => {
   return (
     <section className="container mt-44 flex flex-row items-center gap-x-14">
-      <Separator className="shrink bg-neutral-100" />
+      <Separator className="shrink" />
       <span className="min-w-40 text-center font-mono text-sm font-medium text-neutral-700 sm:min-w-max md:text-xl">
         {count} resumes created so far
       </span>
-      <Separator className="shrink bg-neutral-100" />
+      <Separator className="shrink" />
     </section>
   );
 };

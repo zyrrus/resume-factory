@@ -1,11 +1,34 @@
 import { type PropsWithChildren } from "react";
 import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export default function Page() {
   return (
     <main className="container flex flex-col gap-6 py-12">
       <h1 className="font-mono text-2xl font-semibold">Kitchen Sink</h1>
+      <Typography />
 
+      <h2 className="font-mono text-lg font-medium">Form Elements</h2>
+      <Buttons />
+      <Checkboxes />
+      <Inputs />
+    </main>
+  );
+}
+
+const Row = ({ children }: PropsWithChildren) => (
+  <div className="ml-8 flex flex-row gap-4">{children}</div>
+);
+
+const Col = ({ children }: PropsWithChildren) => (
+  <div className="ml-8 flex flex-col gap-2">{children}</div>
+);
+
+const Typography = () => {
+  return (
+    <>
       <h2 className="font-mono text-lg font-medium">Typography</h2>
       <Col>
         <h1 className="font-mono text-2xl font-semibold">Heading 1</h1>
@@ -41,9 +64,13 @@ export default function Page() {
         </p>
         <p className="font-mono text-sm font-black">Spline Sans Mono - 900</p>
       </Col>
+    </>
+  );
+};
 
-      <h2 className="font-mono text-lg font-medium">Form Elements</h2>
-
+const Buttons = () => {
+  return (
+    <>
       <h3 className="font-mono font-medium">Buttons</h3>
       <Row>
         <Button variant="default">Primary</Button>
@@ -53,14 +80,48 @@ export default function Page() {
         <Button variant="link">Link</Button>
         <Button variant="destructive">Destructive</Button>
       </Row>
-    </main>
+    </>
   );
-}
+};
 
-const Row = ({ children }: PropsWithChildren) => (
-  <div className="ml-8 flex flex-row gap-4">{children}</div>
-);
+const Checkboxes = () => {
+  return (
+    <>
+      <h3 className="font-mono font-medium">Checkboxes</h3>
+      <Col>
+        <Row>
+          <Checkbox id="checkbox-checked" checked />
+          <Label htmlFor="checkbox-checked">Checked</Label>
+        </Row>
+        <Row>
+          <Checkbox id="checkbox-unchecked" checked={false} />
+          <Label htmlFor="checkbox-unchecked">Unchecked</Label>
+        </Row>
+        <Row>
+          <Checkbox id="checkbox-checked-disabled" checked disabled />
+          <Label htmlFor="checkbox-checked-disabled">Checked + Disabled</Label>
+        </Row>
+        <Row>
+          <Checkbox id="checkbox-unchecked-disabled" checked={false} disabled />
+          <Label htmlFor="checkbox-unchecked-disabled">
+            Unchecked + Disabled
+          </Label>
+        </Row>
+      </Col>
+    </>
+  );
+};
 
-const Col = ({ children }: PropsWithChildren) => (
-  <div className="ml-8 flex flex-col gap-2">{children}</div>
-);
+const Inputs = () => {
+  return (
+    <>
+      <h3 className="font-mono font-medium">Inputs</h3>
+      <Row>
+        <div className="grid w-full max-w-sm items-center gap-1">
+          <Label htmlFor="email">Email</Label>
+          <Input type="email" id="email" placeholder="Email" />
+        </div>
+      </Row>
+    </>
+  );
+};

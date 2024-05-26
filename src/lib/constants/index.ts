@@ -1,1 +1,1 @@
-export const CTA_LINK = "/login";
+export const CTA_LINK = "/cv";
