@@ -20,12 +20,15 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-white",
         link: "text-neutral-900 underline-offset-4 hover:underline dark:text-white",
+        input:
+          "font-sans font-normal rounded-md border border-neutral-400 bg-neutral-50 text-sm transition-colors disabled:cursor-not-allowed dark:border-neutral-800",
       },
       size: {
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded px-3 text-xs",
         lg: "h-10 rounded px-8",
         icon: "h-9 w-9",
+        input: "h-9 px-3 py-1.5",
       },
     },
     defaultVariants: {

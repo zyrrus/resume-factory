@@ -22,11 +22,9 @@ import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Checkbox } from "~/components/ui/checkbox";
 import { ArrayField } from "~/components/form/array-field";
+import { DatePicker } from "~/components/ui/date-picker";
 
-// TODO: Add delete buttons to list fields
 // TODO: Add grab handles to list fields
-// TODO: Make date fields date inputs
-// TODO: Bug - Ongoing checkbox doesn't disable properly
 // TODO: Bug - Disabled input doesn't disable label
 
 export default function Page() {
@@ -42,10 +40,11 @@ export default function Page() {
 
   return (
     <main className="container relative max-w-2xl py-16">
-      <div className="fixed bottom-8 right-8 top-8">
+      <div className="fixed bottom-8 right-8 top-8 z-30">
         <Card className="max-h-full w-96 overflow-auto">
+          <h2 className="mb-2 font-mono font-medium">Form Values:</h2>
           <pre className="font-mono text-xs">
-            {JSON.stringify(form.getValues(), undefined, 2)}
+            {JSON.stringify(form.watch(), undefined, 2)}
           </pre>
         </Card>
       </div>
@@ -247,36 +246,14 @@ const Education = () => {
               )}
             />
             <div className="flex flex-row items-end gap-x-5">
-              <FormField
-                control={form.control}
-                name={`education.${index}.startDate`}
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>Start Date</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <DatePicker
+                label="Start Date"
+                fieldName={`education.${index}.startDate`}
               />
-              <FormField
-                control={form.control}
-                name={`education.${index}.endDate`}
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>End Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={form.getValues(
-                          `education.${index}.isOngoing`,
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <DatePicker
+                label="End Date"
+                fieldName={`education.${index}.endDate`}
+                disabled={form.watch(`education.${index}.isOngoing`)}
               />
               <FormField
                 control={form.control}
@@ -359,36 +336,14 @@ const Experience = () => {
               )}
             />
             <div className="flex flex-row items-end gap-x-5">
-              <FormField
-                control={form.control}
-                name={`experience.${index}.startDate`}
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>Start Date</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <DatePicker
+                label="Start Date"
+                fieldName={`experience.${index}.startDate`}
               />
-              <FormField
-                control={form.control}
-                name={`experience.${index}.endDate`}
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>End Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={form.getValues(
-                          `experience.${index}.isOngoing`,
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <DatePicker
+                label="End Date"
+                fieldName={`experience.${index}.endDate`}
+                disabled={form.watch(`experience.${index}.isOngoing`)}
               />
               <FormField
                 control={form.control}
