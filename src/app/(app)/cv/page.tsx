@@ -22,7 +22,7 @@ import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Checkbox } from "~/components/ui/checkbox";
 import { ArrayField } from "~/components/form/array-field";
-import { DatePicker } from "~/components/ui/date-picker";
+import { DatePicker } from "~/components/form/date-picker";
 
 // TODO: Add grab handles to list fields
 // TODO: Bug - Disabled input doesn't disable label
