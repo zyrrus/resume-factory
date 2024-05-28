@@ -7,6 +7,7 @@ import {
   type FieldArray,
   type FieldPath,
 } from "react-hook-form";
+import { LuTrash } from "react-icons/lu";
 import { type FormSchema } from "~/app/(app)/cv/schema";
 import { Button } from "~/components/ui/button";
 import {
@@ -44,14 +45,14 @@ export const ArrayField = <
 }) => {
   const form = useFormContext<FormSchema>();
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: name,
   });
 
   return (
     <div>
-      {fields.map((field, index) => (
+      {fields.map((field, index, array) => (
         <FormField
           control={form.control}
           key={field.id}
@@ -66,10 +67,21 @@ export const ArrayField = <
                   {description}
                 </FormDescription>
               )}
-              <FormControl>
-                {/* @ts-expect-error - TS thinks that non-string fields (like `isOngoing` and `[{ value: '' }]`) are going to be used here  */}
-                <Input placeholder={placeholder} {...field} />
-              </FormControl>
+              <div className="flex flex-row gap-x-2">
+                <FormControl>
+                  {/* @ts-expect-error - TS thinks that non-string fields (like `isOngoing` and `[{ value: '' }]`) are going to be used here  */}
+                  <Input placeholder={placeholder} {...field} />
+                </FormControl>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  type="button"
+                  disabled={array.length === 1}
+                  onClick={() => remove(index)}
+                >
+                  <LuTrash className="h-4 w-4" />
+                </Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}
