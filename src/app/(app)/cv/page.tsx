@@ -8,7 +8,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,10 +19,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "~/components/ui/input";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
+import { Card } from "~/components/ui/card";
+import { Checkbox } from "~/components/ui/checkbox";
+import { ArrayField } from "~/components/form/array-field";
 
 // TODO: Add delete buttons to list fields
 // TODO: Add grab handles to list fields
+// TODO: Make date fields date inputs
+// TODO: Bug - Ongoing checkbox doesn't disable properly
+// TODO: Bug - Disabled input doesn't disable label
 
 export default function Page() {
   const form = useForm<FormSchema>({
@@ -37,11 +41,18 @@ export default function Page() {
   }
 
   return (
-    <main>
+    <main className="container relative max-w-2xl py-16">
+      <div className="fixed bottom-8 right-8 top-8">
+        <Card className="max-h-full w-96 overflow-auto">
+          <pre className="font-mono text-xs">
+            {JSON.stringify(form.getValues(), undefined, 2)}
+          </pre>
+        </Card>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="container flex max-w-2xl flex-col gap-5 py-16"
+          className="flex flex-col gap-5"
         >
           {/* Header */}
           <div className="flex flex-col gap-y-2">
@@ -99,8 +110,24 @@ export default function Page() {
               </FormItem>
             )}
           />
-          <Languages />
-          <URLs />
+          <ArrayField
+            name="languages"
+            fieldNames={(index) => `languages.${index}.value`}
+            label="Languages"
+            description="Add all the languages you speak."
+            buttonLabel="Add Language"
+            placeholder="Your language"
+            defaultValue={defaultValues.languages[0]!}
+          />
+          <ArrayField
+            name="urls"
+            fieldNames={(index) => `urls.${index}.value`}
+            label="URLs"
+            description="Add links to your portfolio, GitHub, LinkedIn, or social media profiles."
+            buttonLabel="Add URL"
+            placeholder="https://"
+            defaultValue={defaultValues.urls[0]!}
+          />
           <Separator orientation="horizontal" />
 
           {/* Education */}
@@ -108,12 +135,40 @@ export default function Page() {
             title="Education"
             subtitle="This is your educational history."
           />
+          <Education />
           <Separator orientation="horizontal" />
 
           {/* Achievements */}
           <SectionHeader
             title="Achievements"
             subtitle="This is your accomplishments and skills."
+          />
+          <ArrayField
+            name="awards"
+            fieldNames={(index) => `awards.${index}.value`}
+            label="Awards"
+            description="Add your awards."
+            buttonLabel="Add Award"
+            placeholder="Your award"
+            defaultValue={defaultValues.awards[0]!}
+          />
+          <ArrayField
+            name="certificates"
+            fieldNames={(index) => `certificates.${index}.value`}
+            label="Certificates"
+            description="Add your certificates."
+            buttonLabel="Add Certificate"
+            placeholder="Your certificate"
+            defaultValue={defaultValues.certificates[0]!}
+          />
+          <ArrayField
+            name="skills"
+            fieldNames={(index) => `skills.${index}.value`}
+            label="Skills"
+            description="Add your skills."
+            buttonLabel="Add Skill"
+            placeholder="Your skill"
+            defaultValue={defaultValues.skills[0]!}
           />
           <Separator orientation="horizontal" />
 
@@ -122,6 +177,7 @@ export default function Page() {
             title="Experience"
             subtitle="This is for your work experience."
           />
+          <Experience />
           <Separator orientation="horizontal" />
 
           {/* Projects */}
@@ -129,6 +185,7 @@ export default function Page() {
             title="Projects"
             subtitle="This is for your personal projects."
           />
+          <Projects />
         </form>
       </Form>
     </main>
@@ -150,88 +207,293 @@ const SectionHeader = ({
   );
 };
 
-const Languages = () => {
+const Education = () => {
   const form = useFormContext<FormSchema>();
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "languages",
+    name: "education",
   });
 
   return (
     <div>
-      {fields.map((field, index) => (
-        <FormField
-          control={form.control}
-          key={field.id}
-          name={`languages.${index}.value`}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className={cn(index !== 0 && "sr-only")}>
-                Languages
-              </FormLabel>
-              <FormDescription className={cn(index !== 0 && "sr-only")}>
-                Add all the languages you speak.
-              </FormDescription>
-              <FormControl>
-                <Input placeholder="Your language" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      ))}
+      <div className="flex flex-col gap-y-5">
+        {fields.map((field, index, array) => (
+          <Card key={field.id} className="flex flex-col gap-y-5">
+            <FormField
+              control={form.control}
+              name={`education.${index}.school`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>School</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your school" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={`education.${index}.degree`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Degree(s)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your degree" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex flex-row items-end gap-x-5">
+              <FormField
+                control={form.control}
+                name={`education.${index}.startDate`}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Start Date</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`education.${index}.endDate`}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>End Date</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={form.getValues(
+                          `education.${index}.isOngoing`,
+                        )}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`education.${index}.isOngoing`}
+                render={({ field }) => (
+                  <FormItem className="mr-2.5 flex h-9 flex-row items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel>Ongoing</FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name={`education.${index}.gpa`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>GPA</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your GPA" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="button"
+              variant="destructive"
+              className="self-end"
+              onClick={() => remove(index)}
+              disabled={index === 0 && array.length === 1}
+            >
+              Delete
+            </Button>
+          </Card>
+        ))}
+      </div>
       <Button
         type="button"
         variant="outline"
         className="mt-4"
-        onClick={() => append({ value: "" })}
+        onClick={() => append(defaultValues.education[0]!)}
       >
-        Add Language
+        Add Education
       </Button>
     </div>
   );
 };
 
-const URLs = () => {
+const Experience = () => {
   const form = useFormContext<FormSchema>();
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "urls",
+    name: "experience",
   });
 
   return (
     <div>
-      {fields.map((field, index) => (
-        <FormField
-          control={form.control}
-          key={field.id}
-          name={`urls.${index}.value`}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className={cn(index !== 0 && "sr-only")}>
-                URLs
-              </FormLabel>
-              <FormDescription className={cn(index !== 0 && "sr-only")}>
-                Add links to your portfolio, GitHub, LinkedIn, or social media
-                profiles.
-              </FormDescription>
-              <FormControl>
-                <Input placeholder="https://" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      ))}
+      <div className="flex flex-col gap-y-5">
+        {fields.map((field, index, array) => (
+          <Card key={field.id} className="flex flex-col gap-y-5">
+            <FormField
+              control={form.control}
+              name={`experience.${index}.employer`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Employer</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your employer" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex flex-row items-end gap-x-5">
+              <FormField
+                control={form.control}
+                name={`experience.${index}.startDate`}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Start Date</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`experience.${index}.endDate`}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>End Date</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={form.getValues(
+                          `experience.${index}.isOngoing`,
+                        )}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`experience.${index}.isOngoing`}
+                render={({ field }) => (
+                  <FormItem className="mr-2.5 flex h-9 flex-row items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel>Ongoing</FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <ArrayField
+              name={`experience.${index}.description`}
+              fieldNames={(i) => `experience.${index}.description.${i}.value`}
+              label="Description"
+              description="Describe your project and achievements in bullet points."
+              buttonLabel="Add Description"
+              placeholder="Your description"
+              defaultValue={defaultValues.experience[0]!.description[0]!}
+            />
+            <Button
+              type="button"
+              variant="destructive"
+              className="self-end"
+              onClick={() => remove(index)}
+              disabled={index === 0 && array.length === 1}
+            >
+              Delete
+            </Button>
+          </Card>
+        ))}
+      </div>
       <Button
         type="button"
         variant="outline"
         className="mt-4"
-        onClick={() => append({ value: "" })}
+        onClick={() => append(defaultValues.experience[0]!)}
       >
-        Add URL
+        Add Experience
+      </Button>
+    </div>
+  );
+};
+
+const Projects = () => {
+  const form = useFormContext<FormSchema>();
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "projects",
+  });
+
+  return (
+    <div>
+      <div className="flex flex-col gap-y-5">
+        {fields.map((field, index, array) => (
+          <Card key={field.id} className="flex flex-col gap-y-5">
+            <FormField
+              control={form.control}
+              name={`projects.${index}.title`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your project title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <ArrayField
+              name={`projects.${index}.description`}
+              fieldNames={(i) => `projects.${index}.description.${i}.value`}
+              label="Description"
+              description="Describe your project experience and achievements in bullet points."
+              buttonLabel="Add Description"
+              placeholder="Your description"
+              defaultValue={defaultValues.projects[0]!.description[0]!}
+            />
+            <Button
+              type="button"
+              variant="destructive"
+              className="self-end"
+              onClick={() => remove(index)}
+              disabled={index === 0 && array.length === 1}
+            >
+              Delete
+            </Button>
+          </Card>
+        ))}
+      </div>
+      <Button
+        type="button"
+        variant="outline"
+        className="mt-4"
+        onClick={() => append(defaultValues.projects[0]!)}
+      >
+        Add Project
       </Button>
     </div>
   );
