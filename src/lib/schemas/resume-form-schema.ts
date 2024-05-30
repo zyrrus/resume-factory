@@ -15,7 +15,7 @@ const refineDate = (input: { endDate: string; isOngoing: boolean }) => {
 /**
  * This is the shape of the Resume Factory CV form
  */
-export const formSchema = z.object({
+export const resumeFormSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   phone: z.string(),
@@ -54,13 +54,13 @@ export const formSchema = z.object({
 /**
  * This is the Resume Factory CV form as a type
  */
-export type FormSchema = z.infer<typeof formSchema>;
+export type ResumeFormSchema = z.infer<typeof resumeFormSchema>;
 
 /**
  * This is all the default values for the Resume Factory CV form
  * These are required, and they cannot be `undefined` or `null`
  */
-export const defaultValues: FormSchema = {
+export const defaultValues: ResumeFormSchema = {
   name: "",
   email: "",
   phone: "",

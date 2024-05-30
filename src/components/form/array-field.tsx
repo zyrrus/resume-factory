@@ -8,7 +8,7 @@ import {
   type FieldPath,
 } from "react-hook-form";
 import { LuTrash } from "react-icons/lu";
-import { type FormSchema } from "~/app/(app)/cv/schema";
+import { type ResumeFormSchema } from "~/lib/schemas/resume-form-schema";
 import { Button } from "~/components/ui/button";
 import {
   FormField,
@@ -23,10 +23,10 @@ import { AutoAnimate } from "~/components/wrappers/auto-animate";
 import { cn } from "~/lib/utils";
 
 export const ArrayField = <
-  TFieldValues extends FormSchema,
+  TFieldValues extends ResumeFormSchema,
   TName extends ArrayPath<TFieldValues>,
   TFieldName extends FieldPath<TFieldValues>,
-  TDefaultValue extends FieldArray<FormSchema, TName>,
+  TDefaultValue extends FieldArray<ResumeFormSchema, TName>,
 >({
   name,
   fieldNames,
@@ -44,7 +44,7 @@ export const ArrayField = <
   description?: string;
   placeholder?: string;
 }) => {
-  const form = useFormContext<FormSchema>();
+  const form = useFormContext<ResumeFormSchema>();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,

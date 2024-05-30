@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  type FormSchema,
-  formSchema,
+  type ResumeFormSchema,
+  resumeFormSchema,
   defaultValues,
-} from "~/app/(app)/cv/schema";
+} from "~/lib/schemas/resume-form-schema";
 import {
   Form,
   FormControl,
@@ -29,16 +29,16 @@ import { AutoAnimate } from "~/components/wrappers/auto-animate";
 // TODO: Bug - Disabled input doesn't disable label
 
 interface ResumeFormProps {
-  initialValues?: FormSchema;
+  initialValues?: ResumeFormSchema;
 }
 
 export const ResumeForm = ({ initialValues }: ResumeFormProps) => {
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ResumeFormSchema>({
+    resolver: zodResolver(resumeFormSchema),
     defaultValues: initialValues ?? defaultValues,
   });
 
-  function onSubmit(values: FormSchema) {
+  function onSubmit(values: ResumeFormSchema) {
     console.log(values);
     toast("You submitted the form.");
   }
@@ -213,7 +213,7 @@ const SectionHeader = ({
 };
 
 const Education = () => {
-  const form = useFormContext<FormSchema>();
+  const form = useFormContext<ResumeFormSchema>();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -316,7 +316,7 @@ const Education = () => {
 };
 
 const Experience = () => {
-  const form = useFormContext<FormSchema>();
+  const form = useFormContext<ResumeFormSchema>();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -402,7 +402,7 @@ const Experience = () => {
 };
 
 const Projects = () => {
-  const form = useFormContext<FormSchema>();
+  const form = useFormContext<ResumeFormSchema>();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,

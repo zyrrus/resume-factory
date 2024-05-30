@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { type FieldPath, useFormContext } from "react-hook-form";
 import { LuCalendar } from "react-icons/lu";
-import { type FormSchema } from "~/app/(app)/cv/schema";
+import { type ResumeFormSchema } from "~/lib/schemas/resume-form-schema";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
 import {
@@ -18,7 +18,7 @@ import {
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
 
-export const DatePicker = <TName extends FieldPath<FormSchema>>({
+export const DatePicker = <TName extends FieldPath<ResumeFormSchema>>({
   label,
   fieldName,
   disabled = false,
@@ -27,7 +27,7 @@ export const DatePicker = <TName extends FieldPath<FormSchema>>({
   fieldName: TName;
   disabled?: boolean;
 }) => {
-  const form = useFormContext<FormSchema>();
+  const form = useFormContext<ResumeFormSchema>();
 
   return (
     <FormField
