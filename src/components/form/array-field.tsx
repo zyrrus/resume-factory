@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { AutoAnimate } from "~/components/wrappers/auto-animate";
 import { cn } from "~/lib/utils";
 
 export const ArrayField = <
@@ -51,7 +52,7 @@ export const ArrayField = <
   });
 
   return (
-    <div>
+    <AutoAnimate>
       {fields.map((field, index, array) => (
         <FormField
           control={form.control}
@@ -95,6 +96,6 @@ export const ArrayField = <
       >
         {buttonLabel}
       </Button>
-    </div>
+    </AutoAnimate>
   );
 };
