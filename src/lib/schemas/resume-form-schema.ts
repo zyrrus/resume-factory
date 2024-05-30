@@ -37,6 +37,7 @@ export const resumeFormSchema = z.object({
   experience: z.array(
     z
       .object({
+        role: z.string(),
         employer: z.string(),
         description: z.array(z.object({ value: z.string() })),
         ...dates,
@@ -81,6 +82,7 @@ export const defaultValues: ResumeFormSchema = {
   skills: [{ value: "" }],
   experience: [
     {
+      role: "",
       employer: "",
       startDate: "",
       endDate: "",

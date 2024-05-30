@@ -27,6 +27,7 @@ import { AutoAnimate } from "~/components/wrappers/auto-animate";
 
 // TODO: Add grab handles to list fields
 // TODO: Bug - Disabled input doesn't disable label
+// TODO: Add links to Projects
 
 interface ResumeFormProps {
   initialValues?: ResumeFormSchema;
@@ -328,6 +329,19 @@ const Experience = () => {
       <AutoAnimate className="flex flex-col gap-y-5">
         {fields.map((field, index, array) => (
           <Card key={field.id} className="flex flex-col gap-y-5">
+            <FormField
+              control={form.control}
+              name={`experience.${index}.role`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your role" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name={`experience.${index}.employer`}
