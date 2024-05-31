@@ -26,9 +26,7 @@ export default function Page() {
           <p>loading your CV...</p>
         </div>
       ) : (
-        <>
-          <ResumeForm />
-        </>
+        <ResumeForm />
       )}
     </main>
   );
