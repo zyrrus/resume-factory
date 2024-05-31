@@ -4,7 +4,6 @@ import { useEffect, useMemo } from "react";
 import debounce from "lodash.debounce";
 import { type DeepPartial, useFormContext } from "react-hook-form";
 import { useCVStore } from "~/hooks/stores/useCVStore";
-import { useStore } from "~/hooks/stores/useStore";
 import { type ResumeFormSchema } from "~/lib/schemas/resume-form-schema";
 
 /**
