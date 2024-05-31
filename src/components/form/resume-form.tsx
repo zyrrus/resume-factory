@@ -24,23 +24,24 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { ArrayField } from "~/components/form/array-field";
 import { DatePicker } from "~/components/form/date-picker";
 import { AutoAnimate } from "~/components/wrappers/auto-animate";
+import { useCVStore } from "~/hooks/stores/useCVStore";
+import { useAutosave } from "~/hooks/useAutosave";
+import merge from "lodash.merge";
 
 // TODO: Add grab handles to list fields
 // TODO: Bug - Disabled input doesn't disable label
 // TODO: Add links to Projects
 
-interface ResumeFormProps {
-  initialValues?: ResumeFormSchema;
-}
+export const ResumeForm = () => {
+  const localCV = useCVStore((state) => state.cv);
 
-export const ResumeForm = ({ initialValues }: ResumeFormProps) => {
   const form = useForm<ResumeFormSchema>({
     resolver: zodResolver(resumeFormSchema),
-    defaultValues: initialValues ?? defaultValues,
+    defaultValues: merge({}, defaultValues, localCV),
   });
 
   function onSubmit(values: ResumeFormSchema) {
-    console.log(values);
+    console.log("Submitted", values);
     toast("You submitted the form.");
   }
 
@@ -48,7 +49,11 @@ export const ResumeForm = ({ initialValues }: ResumeFormProps) => {
     <>
       {/* Temporary preview card */}
       <div className="fixed bottom-8 right-8 top-8 z-30">
-        <Card className="max-h-full w-96 overflow-auto">
+        <Card className="max-h-full w-72 overflow-auto">
+          <h2 className="mb-2 font-mono font-medium">Local Storage:</h2>
+          <pre className="font-mono text-xs">
+            {JSON.stringify(localCV, undefined, 2)}
+          </pre>
           <h2 className="mb-2 font-mono font-medium">Form Values:</h2>
           <pre className="font-mono text-xs">
             {JSON.stringify(form.watch(), undefined, 2)}
@@ -56,22 +61,11 @@ export const ResumeForm = ({ initialValues }: ResumeFormProps) => {
         </Card>
       </div>
       <Form {...form}>
+        <Autosave />
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-5"
         >
-          {/* Header */}
-          <div className="flex flex-col gap-y-2">
-            <h1 className="font-mono text-2xl font-semibold">
-              Curriculum Vitae
-            </h1>
-            <p className="text-neutral-800">
-              This is your extended resume. Add all education, skills,
-              experiences, and projects.
-            </p>
-          </div>
-          <Separator orientation="horizontal" />
-
           {/* Personal Details */}
           <SectionHeader
             title="Personal Details"
@@ -196,6 +190,13 @@ export const ResumeForm = ({ initialValues }: ResumeFormProps) => {
       </Form>
     </>
   );
+};
+
+// This a component that calls a hook and renders nothing.
+// The hook needs to be a child of the form context
+const Autosave = () => {
+  useAutosave();
+  return null;
 };
 
 const SectionHeader = ({
