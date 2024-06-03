@@ -29,7 +29,6 @@ import { useAutosave } from "~/hooks/useAutosave";
 import merge from "lodash.merge";
 
 // TODO: Add grab handles to list fields
-// TODO: Bug - Disabled input doesn't disable label
 // TODO: Add links to Projects
 
 export const ResumeForm = () => {

@@ -11,7 +11,7 @@ import {
 } from "react-hook-form";
 
 import { cn } from "~/lib/utils";
-import { Label } from "~/components/ui/label";
+import { Label, type LabelProps } from "~/components/ui/label";
 
 const Form = FormProvider;
 
@@ -86,7 +86,7 @@ FormItem.displayName = "FormItem";
 
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+  LabelProps
 >(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 

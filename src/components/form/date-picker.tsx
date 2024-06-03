@@ -43,7 +43,7 @@ export const DatePicker = <TName extends FieldPath<ResumeFormSchema>>({
 
         return (
           <FormItem className="flex flex-1 flex-col">
-            <FormLabel>{label}</FormLabel>
+            <FormLabel disabled={disabled}>{label}</FormLabel>
             <Popover>
               <PopoverTrigger asChild>
                 <FormControl>
@@ -68,7 +68,8 @@ export const DatePicker = <TName extends FieldPath<ResumeFormSchema>>({
                   selected={new Date(field.value)}
                   onSelect={field.onChange}
                   disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
+                    date > new Date("2100-01-01") ||
+                    date < new Date("1900-01-01")
                   }
                   initialFocus
                 />
