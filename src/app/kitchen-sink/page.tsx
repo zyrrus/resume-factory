@@ -118,8 +118,19 @@ const Inputs = () => {
       <h3 className="font-mono font-medium">Inputs</h3>
       <Row>
         <div className="grid w-full max-w-sm items-center gap-1">
-          <Label htmlFor="email">Email</Label>
-          <Input type="email" id="email" placeholder="Email" />
+          <Label htmlFor="input-email">Email</Label>
+          <Input type="email" id="input-email" placeholder="Email" />
+        </div>
+        <div className="grid w-full max-w-sm items-center gap-1">
+          <Label htmlFor="input-disabled" disabled>
+            Disabled
+          </Label>
+          <Input
+            type="text"
+            id="input-disabled"
+            placeholder="Disabled"
+            disabled
+          />
         </div>
       </Row>
     </>
