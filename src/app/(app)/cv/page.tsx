@@ -6,7 +6,7 @@ import { Separator } from "~/components/ui/separator";
 import { useCVStorage } from "~/hooks/useCVStorage";
 
 export default function Page() {
-  const { isLoading, data } = useCVStorage();
+  const { isLoading, data: localCV } = useCVStorage();
 
   return (
     <main className="container relative flex min-h-screen max-w-2xl flex-col gap-5 py-16">
@@ -18,13 +18,13 @@ export default function Page() {
         </p>
       </div>
       <Separator orientation="horizontal" />
-      {isLoading || !data ? (
+      {isLoading || !localCV ? (
         <div className="flex flex-1 flex-row items-center gap-x-4 self-center font-mono text-neutral-800">
           <LoadingSpinner />
           <p>loading your CV...</p>
         </div>
       ) : (
-        <ResumeForm defaultValues={data} />
+        <ResumeForm initialValues={localCV} />
       )}
     </main>
   );

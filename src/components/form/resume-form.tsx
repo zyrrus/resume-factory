@@ -30,13 +30,13 @@ import { useAutosave } from "~/hooks/useAutosave";
 // TODO: Add links to Projects
 
 export const ResumeForm = ({
-  defaultValues,
+  initialValues,
 }: {
-  defaultValues: ResumeFormSchema;
+  initialValues: ResumeFormSchema;
 }) => {
   const form = useForm<ResumeFormSchema>({
     resolver: zodResolver(resumeFormSchema),
-    defaultValues,
+    defaultValues: initialValues,
   });
 
   function onSubmit(values: ResumeFormSchema) {

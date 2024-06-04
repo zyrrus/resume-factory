@@ -1,8 +1,13 @@
 import { z } from "zod";
 
-const dates = {
-  startDate: z.string().trim().optional(),
-  endDate: z.string().trim().optional(),
+// Primitives
+const stringField = z.string().trim().optional();
+const arrayField = z
+  .array(z.object({ value: z.string().trim() }))
+  .transform((arr) => arr.filter(({ value }) => value.length > 0));
+const dateFields = {
+  startDate: stringField,
+  endDate: stringField,
   isOngoing: z.boolean(),
 };
 
@@ -15,40 +20,39 @@ const refineDate = (input: { endDate?: string; isOngoing: boolean }) => {
 /**
  * This is the shape of the Resume Factory CV form
  */
-const fieldArray = z.array(z.object({ value: z.string().trim() }));
 export const resumeFormSchema = z.object({
-  name: z.string().trim().optional(),
-  email: z.string().trim().email().optional(),
-  phone: z.string().trim().optional(),
-  languages: fieldArray,
-  urls: fieldArray,
+  name: stringField,
+  email: stringField,
+  phone: stringField,
+  languages: arrayField,
+  urls: arrayField,
   education: z.array(
     z
       .object({
-        school: z.string().trim().optional(),
-        degree: z.string().trim().optional(),
-        gpa: z.string().trim().optional(),
-        ...dates,
+        school: stringField,
+        degree: stringField,
+        gpa: stringField,
+        ...dateFields,
       })
       .refine(refineDate),
   ),
-  awards: fieldArray,
-  certificates: fieldArray,
-  skills: fieldArray,
+  awards: arrayField,
+  certificates: arrayField,
+  skills: arrayField,
   experience: z.array(
     z
       .object({
-        role: z.string().trim().optional(),
-        employer: z.string().trim().optional(),
-        description: fieldArray,
-        ...dates,
+        role: stringField,
+        employer: stringField,
+        description: arrayField,
+        ...dateFields,
       })
       .refine(refineDate),
   ),
   projects: z.array(
     z.object({
-      title: z.string().trim().optional(),
-      description: fieldArray,
+      title: stringField,
+      description: arrayField,
     }),
   ),
 });
