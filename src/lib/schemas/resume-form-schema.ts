@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 const dates = {
-  startDate: z.string().optional(),
-  endDate: z.string().optional(),
+  startDate: z.string().trim().optional(),
+  endDate: z.string().trim().optional(),
   isOngoing: z.boolean(),
 };
 
@@ -15,39 +15,40 @@ const refineDate = (input: { endDate?: string; isOngoing: boolean }) => {
 /**
  * This is the shape of the Resume Factory CV form
  */
+const fieldArray = z.array(z.object({ value: z.string().trim() }));
 export const resumeFormSchema = z.object({
-  name: z.string().optional(),
-  email: z.string().email().optional(),
-  phone: z.string().optional(),
-  languages: z.array(z.object({ value: z.string() })),
-  urls: z.array(z.object({ value: z.string() })),
+  name: z.string().trim().optional(),
+  email: z.string().trim().email().optional(),
+  phone: z.string().trim().optional(),
+  languages: fieldArray,
+  urls: fieldArray,
   education: z.array(
     z
       .object({
-        school: z.string().optional(),
-        degree: z.string().optional(),
-        gpa: z.string().optional(),
+        school: z.string().trim().optional(),
+        degree: z.string().trim().optional(),
+        gpa: z.string().trim().optional(),
         ...dates,
       })
       .refine(refineDate),
   ),
-  awards: z.array(z.object({ value: z.string() })),
-  certificates: z.array(z.object({ value: z.string() })),
-  skills: z.array(z.object({ value: z.string() })),
+  awards: fieldArray,
+  certificates: fieldArray,
+  skills: fieldArray,
   experience: z.array(
     z
       .object({
-        role: z.string().optional(),
-        employer: z.string().optional(),
-        description: z.array(z.object({ value: z.string() })),
+        role: z.string().trim().optional(),
+        employer: z.string().trim().optional(),
+        description: fieldArray,
         ...dates,
       })
       .refine(refineDate),
   ),
   projects: z.array(
     z.object({
-      title: z.string().optional(),
-      description: z.array(z.object({ value: z.string() })),
+      title: z.string().trim().optional(),
+      description: fieldArray,
     }),
   ),
 });

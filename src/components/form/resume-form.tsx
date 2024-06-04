@@ -24,19 +24,19 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { ArrayField } from "~/components/form/array-field";
 import { DatePicker } from "~/components/form/date-picker";
 import { AutoAnimate } from "~/components/wrappers/auto-animate";
-import { useCVStore } from "~/hooks/stores/useCVStore";
 import { useAutosave } from "~/hooks/useAutosave";
-import merge from "lodash.merge";
 
 // TODO: Add grab handles to list fields
 // TODO: Add links to Projects
 
-export const ResumeForm = () => {
-  const localCV = useCVStore((state) => state.cv);
-
+export const ResumeForm = ({
+  defaultValues,
+}: {
+  defaultValues: ResumeFormSchema;
+}) => {
   const form = useForm<ResumeFormSchema>({
     resolver: zodResolver(resumeFormSchema),
-    defaultValues: merge({}, defaultValues, localCV),
+    defaultValues,
   });
 
   function onSubmit(values: ResumeFormSchema) {
@@ -49,10 +49,6 @@ export const ResumeForm = () => {
       {/* Temporary preview card */}
       <div className="fixed bottom-8 right-8 top-8 z-30">
         <Card className="max-h-full w-72 overflow-auto">
-          <h2 className="mb-2 font-mono font-medium">Local Storage:</h2>
-          <pre className="font-mono text-xs">
-            {JSON.stringify(localCV, undefined, 2)}
-          </pre>
           <h2 className="mb-2 font-mono font-medium">Form Values:</h2>
           <pre className="font-mono text-xs">
             {JSON.stringify(form.watch(), undefined, 2)}

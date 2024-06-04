@@ -3,12 +3,10 @@
 import { ResumeForm } from "~/components/form/resume-form";
 import { LoadingSpinner } from "~/components/loading-spinner";
 import { Separator } from "~/components/ui/separator";
-import { useCVStore } from "~/hooks/stores/useCVStore";
+import { useCVStorage } from "~/hooks/useCVStorage";
 
 export default function Page() {
-  const cv = useCVStore((state) => state.cv);
-
-  const storeIsHydrated = useCVStore.persist?.hasHydrated() && !!cv;
+  const { isLoading, data } = useCVStorage();
 
   return (
     <main className="container relative flex min-h-screen max-w-2xl flex-col gap-5 py-16">
@@ -20,13 +18,13 @@ export default function Page() {
         </p>
       </div>
       <Separator orientation="horizontal" />
-      {!storeIsHydrated ? (
+      {isLoading || !data ? (
         <div className="flex flex-1 flex-row items-center gap-x-4 self-center font-mono text-neutral-800">
           <LoadingSpinner />
           <p>loading your CV...</p>
         </div>
       ) : (
-        <ResumeForm />
+        <ResumeForm defaultValues={data} />
       )}
     </main>
   );
