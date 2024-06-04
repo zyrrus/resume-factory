@@ -194,7 +194,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#EAE6E6]">
       <div className="container">
-        <div className="flex flex-col items-stretch justify-center gap-x-16 gap-y-8 py-8 md:flex-row md:py-24">
+        <div className="flex flex-col-reverse items-stretch justify-center gap-x-16 gap-y-8 py-8 md:flex-row md:py-24">
           {/* Links */}
           <div className="grid gap-x-20 gap-y-8 pr-20 pt-10 sm:grid-cols-3">
             <FooterColumn
@@ -233,9 +233,12 @@ const Footer: React.FC = () => {
 
           <Separator
             orientation="vertical"
-            className="hidden h-auto md:block"
+            className="hidden h-auto bg-neutral-400 md:block"
           />
-          <Separator orientation="horizontal" className="md:hidden" />
+          <Separator
+            orientation="horizontal"
+            className="bg-neutral-400 md:hidden"
+          />
 
           {/* Branding + description */}
           <div className="max-w-md pb-16 md:pt-9">

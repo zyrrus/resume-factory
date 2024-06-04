@@ -9,7 +9,7 @@ export default function Page() {
   const { isLoading, data: localCV } = useCVStorage();
 
   return (
-    <main className="container relative flex min-h-screen max-w-2xl flex-col gap-5 py-16">
+    <main className="container relative flex max-w-2xl flex-col gap-5 py-16">
       <div className="flex flex-col gap-y-2">
         <h1 className="font-mono text-2xl font-semibold">Curriculum Vitae</h1>
         <p className="text-neutral-800">
