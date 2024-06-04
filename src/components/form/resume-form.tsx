@@ -17,7 +17,6 @@ import { Separator } from "~/components/ui/separator";
 import { useFieldArray, useForm, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "~/components/ui/input";
-import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Checkbox } from "~/components/ui/checkbox";
@@ -39,15 +38,10 @@ export const ResumeForm = ({
     defaultValues: initialValues,
   });
 
-  function onSubmit(values: ResumeFormSchema) {
-    console.log("Submitted", values);
-    toast("You submitted the form.");
-  }
-
   return (
     <>
       {/* Temporary preview card */}
-      <div className="fixed bottom-8 right-8 top-8 z-30">
+      <div className="fixed bottom-8 right-8 top-8 z-30 hidden lg:block">
         <Card className="max-h-full w-72 overflow-auto">
           <h2 className="mb-2 font-mono font-medium">Form Values:</h2>
           <pre className="font-mono text-xs">
@@ -57,10 +51,7 @@ export const ResumeForm = ({
       </div>
       <Form {...form}>
         <Autosave />
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5"
-        >
+        <form className="flex flex-col gap-5">
           {/* Personal Details */}
           <SectionHeader
             title="Personal Details"
@@ -248,7 +239,7 @@ const Education = () => {
                 </FormItem>
               )}
             />
-            <div className="flex flex-row items-end gap-x-5">
+            <div className="flex flex-col gap-5 md:flex-row md:items-end">
               <DatePicker
                 label="Start Date"
                 fieldName={`education.${index}.startDate`}
@@ -351,7 +342,7 @@ const Experience = () => {
                 </FormItem>
               )}
             />
-            <div className="flex flex-row items-end gap-x-5">
+            <div className="flex flex-col gap-5 md:flex-row md:items-end">
               <DatePicker
                 label="Start Date"
                 fieldName={`experience.${index}.startDate`}
