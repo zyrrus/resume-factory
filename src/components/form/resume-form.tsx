@@ -39,142 +39,131 @@ export const ResumeForm = ({
   });
 
   return (
-    <>
-      {/* Temporary preview card */}
-      <div className="fixed bottom-8 right-8 top-8 z-30 hidden lg:block">
-        <Card className="max-h-full w-72 overflow-auto">
-          <h2 className="mb-2 font-mono font-medium">Form Values:</h2>
-          <pre className="font-mono text-xs">
-            {JSON.stringify(form.watch(), undefined, 2)}
-          </pre>
-        </Card>
-      </div>
-      <Form {...form}>
-        <Autosave />
-        <form className="flex flex-col gap-5">
-          {/* Personal Details */}
-          <SectionHeader
-            title="Personal Details"
-            subtitle="This is all the basic information about yourself."
-          />
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your phone" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <ArrayField
-            name="languages"
-            fieldNames={(index) => `languages.${index}.value`}
-            label="Languages"
-            description="Add all the languages you speak."
-            buttonLabel="Add Language"
-            placeholder="Your language"
-            defaultValue={defaultValues.languages[0]!}
-          />
-          <ArrayField
-            name="urls"
-            fieldNames={(index) => `urls.${index}.value`}
-            label="URLs"
-            description="Add links to your portfolio, GitHub, LinkedIn, or social media profiles."
-            buttonLabel="Add URL"
-            placeholder="https://"
-            defaultValue={defaultValues.urls[0]!}
-          />
-          <Separator orientation="horizontal" />
+    <Form {...form}>
+      <Autosave />
+      <form className="flex flex-col gap-5">
+        {/* Personal Details */}
+        <SectionHeader
+          title="Personal Details"
+          subtitle="This is all the basic information about yourself."
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Your name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Your email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input placeholder="Your phone" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <ArrayField
+          name="languages"
+          fieldNames={(index) => `languages.${index}.value`}
+          label="Languages"
+          description="Add all the languages you speak."
+          buttonLabel="Add Language"
+          placeholder="Your language"
+          defaultValue={defaultValues.languages[0]!}
+        />
+        <ArrayField
+          name="urls"
+          fieldNames={(index) => `urls.${index}.value`}
+          label="URLs"
+          description="Add links to your portfolio, GitHub, LinkedIn, or social media profiles."
+          buttonLabel="Add URL"
+          placeholder="https://"
+          defaultValue={defaultValues.urls[0]!}
+        />
+        <Separator orientation="horizontal" />
 
-          {/* Education */}
-          <SectionHeader
-            title="Education"
-            subtitle="This is your educational history."
-          />
-          <Education />
-          <Separator orientation="horizontal" />
+        {/* Education */}
+        <SectionHeader
+          title="Education"
+          subtitle="This is your educational history."
+        />
+        <Education />
+        <Separator orientation="horizontal" />
 
-          {/* Achievements */}
-          <SectionHeader
-            title="Achievements"
-            subtitle="This is your accomplishments and skills."
-          />
-          <ArrayField
-            name="awards"
-            fieldNames={(index) => `awards.${index}.value`}
-            label="Awards"
-            description="Add your awards."
-            buttonLabel="Add Award"
-            placeholder="Your award"
-            defaultValue={defaultValues.awards[0]!}
-          />
-          <ArrayField
-            name="certificates"
-            fieldNames={(index) => `certificates.${index}.value`}
-            label="Certificates"
-            description="Add your certificates."
-            buttonLabel="Add Certificate"
-            placeholder="Your certificate"
-            defaultValue={defaultValues.certificates[0]!}
-          />
-          <ArrayField
-            name="skills"
-            fieldNames={(index) => `skills.${index}.value`}
-            label="Skills"
-            description="Add your skills."
-            buttonLabel="Add Skill"
-            placeholder="Your skill"
-            defaultValue={defaultValues.skills[0]!}
-          />
-          <Separator orientation="horizontal" />
+        {/* Achievements */}
+        <SectionHeader
+          title="Achievements"
+          subtitle="This is your accomplishments and skills."
+        />
+        <ArrayField
+          name="awards"
+          fieldNames={(index) => `awards.${index}.value`}
+          label="Awards"
+          description="Add your awards."
+          buttonLabel="Add Award"
+          placeholder="Your award"
+          defaultValue={defaultValues.awards[0]!}
+        />
+        <ArrayField
+          name="certificates"
+          fieldNames={(index) => `certificates.${index}.value`}
+          label="Certificates"
+          description="Add your certificates."
+          buttonLabel="Add Certificate"
+          placeholder="Your certificate"
+          defaultValue={defaultValues.certificates[0]!}
+        />
+        <ArrayField
+          name="skills"
+          fieldNames={(index) => `skills.${index}.value`}
+          label="Skills"
+          description="Add your skills."
+          buttonLabel="Add Skill"
+          placeholder="Your skill"
+          defaultValue={defaultValues.skills[0]!}
+        />
+        <Separator orientation="horizontal" />
 
-          {/* Experience */}
-          <SectionHeader
-            title="Experience"
-            subtitle="This is for your work experience."
-          />
-          <Experience />
-          <Separator orientation="horizontal" />
+        {/* Experience */}
+        <SectionHeader
+          title="Experience"
+          subtitle="This is for your work experience."
+        />
+        <Experience />
+        <Separator orientation="horizontal" />
 
-          {/* Projects */}
-          <SectionHeader
-            title="Projects"
-            subtitle="This is for your personal projects."
-          />
-          <Projects />
-        </form>
-      </Form>
-    </>
+        {/* Projects */}
+        <SectionHeader
+          title="Projects"
+          subtitle="This is for your personal projects."
+        />
+        <Projects />
+      </form>
+    </Form>
   );
 };
 
