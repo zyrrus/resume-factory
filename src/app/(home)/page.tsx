@@ -102,7 +102,7 @@ const Benefits: React.FC = () => {
       <div className="relative">
         {/* Half background */}
         <div className="absolute inset-0 top-1/2 -z-50 bg-[#F4F2F2]" />
-        <div className="container flex flex-col items-center gap-8 lg:flex-row lg:items-stretch">
+        <div className="container flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-stretch">
           {BENEFITS.map(({ title, description, icon }) => (
             <div
               key={title}

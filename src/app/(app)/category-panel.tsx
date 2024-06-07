@@ -13,7 +13,7 @@ const MOCK_CATEGORIES = [
 
 export const CategoryPanel = () => {
   return (
-    <div className="fixed right-0 top-0 hidden max-w-xs flex-row items-start p-4 md:flex">
+    <div className="sticky top-0 hidden h-screen max-w-xs flex-row items-start p-4 md:flex">
       <Card className="flex w-full flex-col gap-y-5 p-4">
         <div className="space-y-2">
           <h2 className="font-mono text-lg font-medium">Categories</h2>

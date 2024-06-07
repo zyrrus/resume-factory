@@ -18,7 +18,7 @@ export const NavigationPanel = () => {
   const pathname = usePathname();
 
   return (
-    <div className="fixed left-0 top-0 hidden h-full max-h-screen w-full max-w-xs p-4 md:flex">
+    <div className="sticky top-0 hidden h-screen w-full max-w-xs p-4 md:flex">
       <Card className="flex w-full flex-col gap-y-5 p-4">
         <NavLink href="/" icon={LuFeather}>
           Resume Factory
