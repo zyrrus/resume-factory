@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { LuDownload } from "react-icons/lu";
 import { ResumeForm } from "~/components/form/resume-form";
 import { LoadingSpinner } from "~/components/loading-spinner";
@@ -59,17 +60,35 @@ const Preview = () => {
 };
 
 const ControlBar = ({ resumeName }: { resumeName: string }) => {
+  const router = useRouter();
+
+  const handleDownload = () => {
+    // TODO: Implement
+  };
+
+  const handleCancel = () => {
+    // TODO: Implement
+    router.push("/cv");
+  };
+
+  const handleSave = () => {
+    // TODO: Implement
+    router.push("/cv");
+  };
+
   return (
     <Card className="flex flex-row items-center gap-x-2.5">
-      <Button variant="ghost" size="icon">
+      <Button variant="ghost" size="icon" onClick={handleDownload}>
         <LuDownload className="h-4 w-4" />
       </Button>
       <p className="font-mono text-lg font-medium">{resumeName}</p>
 
       <div className="flex-1" />
 
-      <Button variant="outline">Cancel</Button>
-      <Button>Save</Button>
+      <Button variant="outline" onClick={handleCancel}>
+        Cancel
+      </Button>
+      <Button onClick={handleSave}>Save</Button>
     </Card>
   );
 };

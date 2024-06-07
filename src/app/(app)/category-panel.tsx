@@ -56,6 +56,7 @@ interface CategoryProps {
 
 const Category: React.FC<CategoryProps> = ({ id, name }) => {
   const router = useRouter();
+
   const handleEdit = () => {
     router.push(`/resume/${id}`);
   };
