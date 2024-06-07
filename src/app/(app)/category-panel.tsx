@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   LuDownload,
   LuFileEdit,
@@ -12,16 +13,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { Separator } from "~/components/ui/separator";
 
 const MOCK_CATEGORIES = [
-  { name: "Frontend" },
-  { name: "Backend" },
-  { name: "Full-stack" },
+  { id: "0", name: "Frontend" },
+  { id: "1", name: "Backend" },
+  { id: "2", name: "Full-stack" },
 ];
 
 export const CategoryPanel = () => {
@@ -39,8 +38,8 @@ export const CategoryPanel = () => {
         <Separator />
 
         <div className="space-y-3">
-          {MOCK_CATEGORIES.map(({ name }) => (
-            <Category key={name} name={name} />
+          {MOCK_CATEGORIES.map(({ id, name }) => (
+            <Category key={name} id={id} name={name} />
           ))}
         </div>
 
@@ -51,12 +50,14 @@ export const CategoryPanel = () => {
 };
 
 interface CategoryProps {
+  id: string;
   name: string;
 }
 
-const Category: React.FC<CategoryProps> = ({ name }) => {
+const Category: React.FC<CategoryProps> = ({ id, name }) => {
+  const router = useRouter();
   const handleEdit = () => {
-    // TODO: Implement
+    router.push(`/resume/${id}`);
   };
 
   const handleDownload = () => {
