@@ -66,6 +66,10 @@ const config = {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
       },
+      boxShadow: {
+        "2xl":
+          "0px 4px 16px rgba(17,17,26,0.06), 0px 8px 24px rgba(17,17,26,0.06), 0px 16px 56px rgba(17,17,26,0.06);",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

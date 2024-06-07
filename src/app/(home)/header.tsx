@@ -15,7 +15,7 @@ const HEADER_LINKS = [
 
 export const Header: React.FC = () => {
   return (
-    <header className="sticky left-0 right-0 top-0 z-40 bg-white font-mono font-medium shadow-xl transition-all duration-300 ease-in-out">
+    <header className="sticky left-0 right-0 top-0 z-40 bg-white font-mono font-medium shadow-2xl transition-all duration-300 ease-in-out">
       <div className="mx-auto flex max-w-7xl flex-row justify-between gap-x-4 p-4">
         <div className="flex flex-row items-center">
           <LuFeather className="h-6 w-6 text-neutral-900" />
