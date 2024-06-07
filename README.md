@@ -9,3 +9,7 @@
 This is a tool that allows you to piece together a tailored resume by selecting your most relevant career achievements, skills, projects, and education from your CV, and then assemble those parts into a more refined resume.
 
 [resume-factory.vercel.app](https://resume-factory.vercel.app)
+
+## Wiki
+
+- [Getting Started](https://github.com/zyrrus/resume-factory/wiki/Getting-Started)
