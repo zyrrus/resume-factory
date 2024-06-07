@@ -17,7 +17,9 @@ export default function Page() {
           and projects.
         </p>
       </div>
+
       <Separator orientation="horizontal" />
+
       {isLoading || !localCV ? (
         <div className="flex flex-1 flex-row items-center gap-x-4 self-center font-mono text-neutral-800">
           <LoadingSpinner />

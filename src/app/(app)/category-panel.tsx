@@ -13,7 +13,7 @@ const MOCK_CATEGORIES = [
 
 export const CategoryPanel = () => {
   return (
-    <div className="hidden max-w-xs flex-row items-start p-4 md:flex">
+    <div className="fixed right-0 top-0 hidden max-w-xs flex-row items-start p-4 md:flex">
       <Card className="flex w-full flex-col gap-y-5 p-4">
         <div className="space-y-2">
           <h2 className="font-mono text-lg font-medium">Categories</h2>
@@ -44,11 +44,14 @@ interface CategoryProps {
 const Category: React.FC<CategoryProps> = ({ name }) => {
   return (
     <div className="flex flex-row gap-x-2">
-      <Button variant="neutral" className="flex-1 justify-start gap-x-2 px-3">
+      <Button
+        variant="neutral"
+        className="flex-1 justify-start gap-x-2 bg-neutral-50 px-3"
+      >
         <LuFileEdit className="h-4 w-4" />
         {name}
       </Button>
-      <Button variant="neutral" size="icon">
+      <Button variant="neutral" size="icon" className="bg-neutral-50">
         <LuMoreHorizontal className="h-4 w-4" />
       </Button>
     </div>

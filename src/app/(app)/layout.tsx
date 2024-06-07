@@ -4,10 +4,10 @@ import { CategoryPanel } from "./category-panel";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div className="grid md:grid-cols-[324px_minmax(0,1fr)_324px]">
+    <>
       <NavigationPanel />
-      <div className="max-h-screen overflow-auto">{children}</div>
+      <main className="mx-80">{children}</main>
       <CategoryPanel />
-    </div>
+    </>
   );
 }
