@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { Spline_Sans_Mono, Montserrat } from "next/font/google";
 import { type PropsWithChildren } from "react";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
@@ -29,13 +30,15 @@ export const metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`font-sans ${montserrat.variable} ${splineSansMono.variable} text-neutral-950 selection:bg-primary-500 selection:text-neutral-50`}
-      >
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-        <Toaster />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="scroll-smooth">
+        <body
+          className={`font-sans ${montserrat.variable} ${splineSansMono.variable} text-neutral-950 selection:bg-primary-500 selection:text-neutral-50`}
+        >
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
