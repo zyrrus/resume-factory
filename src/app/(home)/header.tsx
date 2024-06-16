@@ -5,6 +5,7 @@ import { LuFeather, LuGithub, LuMoon } from "react-icons/lu";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { CTA_LINK } from "~/lib/constants";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 const HEADER_LINKS = [
   { label: "About", url: "#about" },
@@ -14,6 +15,9 @@ const HEADER_LINKS = [
 ];
 
 export const Header: React.FC = () => {
+  const { signOut } = useAuth();
+  const { isLoaded, isSignedIn, user } = useUser();
+
   return (
     <header className="sticky left-0 right-0 top-0 z-40 bg-white font-mono font-medium shadow-2xl transition-all duration-300 ease-in-out">
       <div className="mx-auto flex max-w-7xl flex-row justify-between gap-x-4 p-4">
@@ -56,10 +60,17 @@ export const Header: React.FC = () => {
             </Button>
           </div>
 
-          {/* CTA */}
-          <Button asChild>
-            <Link href={CTA_LINK}>Sign Up</Link>
-          </Button>
+          {isLoaded && isSignedIn ? (
+            <>
+              <Button onClick={() => signOut()}>Sign Out</Button>
+              <p>Logged in as {user?.fullName}</p>
+            </>
+          ) : (
+            /* CTA */
+            <Button asChild>
+              <Link href={CTA_LINK}>Sign Up</Link>
+            </Button>
+          )}
         </nav>
       </div>
     </header>
