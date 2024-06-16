@@ -4,9 +4,9 @@ import { date, text, varchar } from "drizzle-orm/pg-core";
 export const cv = createTable("cv", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   userId: varchar("user_id", { length: 255 }).notNull().unique(), // "Foreign key" from Clerk
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }),
-  phone: varchar("phone", { length: 255 }),
+  name: varchar("name", { length: 128 }),
+  email: varchar("email", { length: 128 }),
+  phone: varchar("phone", { length: 32 }),
 });
 
 export const cvDetail = createTable("cv_detail", {
@@ -38,7 +38,7 @@ export const experience = createTable("experience", {
   end_date: date("end_date"),
 });
 
-export const experience_description = createTable("experience_description", {
+export const experienceDescription = createTable("experience_description", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   experienceId: varchar("experience_id", { length: 255 }).references(
     () => experience.id,
@@ -52,7 +52,7 @@ export const project = createTable("project", {
   title: varchar("title", { length: 128 }),
 });
 
-export const project_description = createTable("project_description", {
+export const projectDescription = createTable("project_description", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   projectId: varchar("project_id", { length: 255 }).references(
     () => project.id,
