@@ -14,6 +14,7 @@ import {
   LuMoreHorizontal,
   LuTrash,
   LuInfo,
+  LuPlusCircle,
 } from "react-icons/lu";
 import { useAuth } from "@clerk/nextjs";
 import {
@@ -41,17 +42,18 @@ const MOCK_CATEGORIES = [
 
 export const NavigationPanel = () => {
   const pathname = usePathname();
-  const { signOut } = useAuth();
 
   return (
     <div className="sticky top-0 hidden h-screen w-full max-w-xs p-4 md:flex">
       <Card className="flex w-full flex-col gap-y-5 p-4">
+        {/* Logo */}
         <NavLink href="/" icon={LuFeather}>
           Resume Factory
         </NavLink>
 
         <Separator />
 
+        {/* CV */}
         <div className="space-y-2">
           <SubHeading>CV</SubHeading>
           <NavLink href="/cv" icon={LuFileText} isActive={pathname === "/cv"}>
@@ -59,48 +61,27 @@ export const NavigationPanel = () => {
           </NavLink>
         </div>
 
+        {/* Resumes */}
         <div className="space-y-2">
           <SubHeading>
             Resumes
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <LuInfo />
-                </TooltipTrigger>
-                <TooltipContent align="start">
-                  <p className="max-w-72 normal-case">
-                    These are your refined resume categories. Assign sections
-                    from your CV to these categories create tailored resumes.
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <ResumeTooltip />
           </SubHeading>
 
           {MOCK_CATEGORIES.map(({ id, name }) => (
             <Category key={name} id={id} name={name} />
           ))}
 
-          <Button className="w-full">New Category</Button>
+          <Button className="w-full">
+            <LuPlusCircle className="mr-2 h-4 w-4" />
+            New Category
+          </Button>
         </div>
 
         <div className="flex-1" />
 
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex flex-row items-center gap-2 rounded-xl p-3 font-mono font-medium hover:bg-neutral-100">
-            <LuSettings className="h-5 w-5 text-neutral-900" />
-            Settings
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side="top" align="start">
-            <DropdownMenuItem
-              onClick={() => signOut({ redirectUrl: "/" })}
-              className="cursor-pointer"
-            >
-              <LuLogOut className="h-4 w-4" />
-              Sign out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* Settings */}
+        <Settings />
       </Card>
     </div>
   );
@@ -138,6 +119,24 @@ const NavLink: React.FC<NavLinkProps> = ({
       <Icon className="h-5 w-5 text-neutral-900" />
       {children}
     </Link>
+  );
+};
+
+const ResumeTooltip = () => {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <LuInfo />
+        </TooltipTrigger>
+        <TooltipContent align="start">
+          <p className="max-w-72 normal-case">
+            These are your refined resume categories. Assign sections from your
+            CV to these categories create tailored resumes.
+          </p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
@@ -199,5 +198,27 @@ const Category: React.FC<CategoryProps> = ({ id, name }) => {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
+  );
+};
+
+const Settings = () => {
+  const { signOut } = useAuth();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex flex-row items-center gap-2 rounded-xl p-3 font-mono font-medium hover:bg-neutral-100">
+        <LuSettings className="h-5 w-5 text-neutral-900" />
+        Settings
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="top" align="start">
+        <DropdownMenuItem
+          onClick={() => signOut({ redirectUrl: "/" })}
+          className="cursor-pointer"
+        >
+          <LuLogOut className="h-4 w-4" />
+          Sign out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
