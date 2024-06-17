@@ -3,7 +3,7 @@ import { NavigationPanel } from "./navigation-panel";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div className="relative grid grid-cols-[324px_minmax(0,1fr)]">
+    <div className="relative grid grid-cols-1 md:grid-cols-[324px_minmax(0,1fr)]">
       <NavigationPanel />
       {children}
     </div>
