@@ -1,7 +1,24 @@
-import { drizzle } from "drizzle-orm/vercel-postgres";
-import { sql } from "@vercel/postgres";
+import { drizzle } from "drizzle-orm/neon-serverless";
+import { Pool, neonConfig } from "@neondatabase/serverless";
 
+import { env } from "~/env";
 import * as schema from "./schema";
 
-// Use this object to send drizzle queries to your DB
-export const db = drizzle(sql, { schema });
+if (env.NODE_ENV !== "production") {
+  // Set the WebSocket proxy to work with the local instance
+  neonConfig.wsProxy = (host) => `${host}:5433/v1`;
+
+  // Disable all authentication and encryption
+  neonConfig.useSecureWebSocket = false;
+  neonConfig.pipelineTLS = false;
+  neonConfig.pipelineConnect = false;
+}
+
+const pool = new Pool({
+  connectionString: env.POSTGRES_URL,
+});
+
+export const db = drizzle(pool, {
+  schema,
+  logger: true,
+});

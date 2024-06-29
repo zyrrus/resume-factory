@@ -9,25 +9,28 @@
 
 # On Linux and macOS you can run this script directly - `./start-database.sh`
 
+COMPOSE_FILE="docker-compose.yml"
 DB_CONTAINER_NAME="resume-factory-postgres"
+COMPOSE_SERVICE_NAME="postgres"
 
-if ! [ -x "$(command -v docker)" ]; then
-  echo -e "Docker is not installed. Please install docker and try again.\nDocker install guide: https://docs.docker.com/engine/install/"
+if ! [ -x "$(command -v docker-compose)" ]; then
+  echo -e "Docker Compose is not installed. Please install Docker Compose and try again.\nDocker Compose install guide: https://docs.docker.com/compose/install/"
   exit 1
 fi
 
-if [ "$(docker ps -q -f name=$DB_CONTAINER_NAME)" ]; then
-  echo "Database container '$DB_CONTAINER_NAME' already running"
+if [ "$(docker-compose -f $COMPOSE_FILE ps -q $COMPOSE_SERVICE_NAME)" ]; then
+  echo "Database container '$DB_CONTAINER_NAME' already running via Docker Compose"
   exit 0
 fi
 
-if [ "$(docker ps -q -a -f name=$DB_CONTAINER_NAME)" ]; then
-  docker start "$DB_CONTAINER_NAME"
-  echo "Existing database container '$DB_CONTAINER_NAME' started"
+# Check if the service exists but is not running
+if [ "$(docker-compose -f $COMPOSE_FILE ps -a -q $COMPOSE_SERVICE_NAME)" ] && [ ! "$(docker-compose -f $COMPOSE_FILE ps -q $COMPOSE_SERVICE_NAME)" ]; then
+  docker-compose -f $COMPOSE_FILE start $COMPOSE_SERVICE_NAME
+  echo "Existing database container '$DB_CONTAINER_NAME' started via Docker Compose"
   exit 0
 fi
 
-# import env variables from .env
+# Import env variables from .env
 set -a
 source .env
 
@@ -45,9 +48,7 @@ if [ "$DB_PASSWORD" = "password" ]; then
   sed -i -e "s#:password@#:$DB_PASSWORD@#" .env
 fi
 
-docker run -d \
-  --name $DB_CONTAINER_NAME \
-  -e POSTGRES_PASSWORD="$DB_PASSWORD" \
-  -e POSTGRES_DB=resume-factory \
-  -p 5432:5432 \
-  docker.io/postgres && echo "Database container '$DB_CONTAINER_NAME' was successfully created"
+# Update the environment variables in the Docker Compose file if necessary
+# Assuming environment variables in the docker-compose.yml file match those in .env
+
+docker-compose -f $COMPOSE_FILE up -d && echo "Database and proxy services were successfully created via Docker Compose"
