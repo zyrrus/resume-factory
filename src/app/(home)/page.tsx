@@ -255,7 +255,7 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Copyright */}
-      <div className="bg-neutral-900 py-7">
+      <div className="bg-neutral-800 py-7">
         <p className="text-center font-mono text-sm font-medium text-neutral-50">
           © 2024 Resume Factory. All rights reserved.
         </p>

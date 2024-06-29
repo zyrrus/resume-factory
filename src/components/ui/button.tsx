@@ -12,16 +12,16 @@ const buttonVariants = cva(
         default:
           "bg-primary-500 text-white shadow hover:bg-primary-500/80 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90",
         neutral:
-          "bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-100/50 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-800/80",
+          "bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-50 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-800/80",
         outline:
-          "border border-neutral-400 bg-white shadow-sm hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-white",
+          "border border-neutral-200 bg-white shadow-sm hover:bg-neutral-50 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-white",
         destructive:
           "bg-destructive-500 text-white shadow-sm hover:bg-destructive-500/80 dark:bg-destructive-900 dark:text-white dark:hover:bg-destructive-900/90",
         ghost:
-          "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-white",
+          "hover:bg-neutral-50 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-white",
         link: "text-neutral-900 underline-offset-4 hover:underline dark:text-white",
         input:
-          "font-sans font-normal rounded-md border border-neutral-400 bg-neutral-50 text-sm transition-colors disabled:cursor-not-allowed dark:border-neutral-800",
+          "font-sans font-normal rounded-md border border-neutral-200 bg-neutral-50 text-sm transition-colors disabled:cursor-not-allowed dark:border-neutral-800",
       },
       size: {
         default: "h-9 px-4 py-2",

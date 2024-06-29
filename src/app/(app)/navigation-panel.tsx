@@ -110,7 +110,7 @@ const NavLink: React.FC<NavLinkProps> = ({
 
 const Resumes = () => {
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-y-2">
       <SubHeading>
         Resumes
         <ResumeTooltip />
@@ -120,7 +120,7 @@ const Resumes = () => {
         <Category key={name} id={id} name={name} />
       ))}
 
-      <Button className="w-full">
+      <Button className="mt-1 w-full">
         <LuPlusCircle className="mr-2 h-4 w-4" />
         New Category
       </Button>
@@ -169,8 +169,8 @@ const Category: React.FC<CategoryProps> = ({ id, name }) => {
   return (
     <div className="flex flex-row gap-x-2">
       <Button
-        variant="neutral"
-        className="flex-1 justify-start gap-x-2 bg-neutral-50 px-3"
+        variant="outline"
+        className="flex-1 justify-start gap-x-2 px-3"
         onClick={handleEdit}
       >
         <LuFileEdit className="h-4 w-4" />
@@ -179,13 +179,11 @@ const Category: React.FC<CategoryProps> = ({ id, name }) => {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="neutral" size="icon" className="bg-neutral-50">
+          <Button variant="outline" size="icon">
             <LuMoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="bottom" align="end">
-          {/* <DropdownMenuLabel>{name}</DropdownMenuLabel>
-          <DropdownMenuSeparator /> */}
           <DropdownMenuItem onClick={handleEdit} className="cursor-pointer">
             <LuFileEdit className="h-4 w-4" />
             Edit
