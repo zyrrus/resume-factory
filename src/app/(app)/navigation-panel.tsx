@@ -62,21 +62,7 @@ export const NavigationPanel = () => {
         </div>
 
         {/* Resumes */}
-        <div className="space-y-2">
-          <SubHeading>
-            Resumes
-            <ResumeTooltip />
-          </SubHeading>
-
-          {MOCK_CATEGORIES.map(({ id, name }) => (
-            <Category key={name} id={id} name={name} />
-          ))}
-
-          <Button className="w-full">
-            <LuPlusCircle className="mr-2 h-4 w-4" />
-            New Category
-          </Button>
-        </div>
+        <Resumes />
 
         <div className="flex-1" />
 
@@ -112,13 +98,33 @@ const NavLink: React.FC<NavLinkProps> = ({
     <Link
       href={href}
       className={cn(
-        "flex flex-row items-center gap-2 rounded-xl p-3 font-mono font-medium hover:bg-neutral-100",
+        "flex flex-row items-center gap-2 rounded-xl p-3 font-mono font-medium transition-colors hover:bg-neutral-100",
         isActive && "bg-neutral-100 hover:bg-neutral-100/50",
       )}
     >
       <Icon className="h-5 w-5 text-neutral-900" />
       {children}
     </Link>
+  );
+};
+
+const Resumes = () => {
+  return (
+    <div className="space-y-2">
+      <SubHeading>
+        Resumes
+        <ResumeTooltip />
+      </SubHeading>
+
+      {MOCK_CATEGORIES.map(({ id, name }) => (
+        <Category key={name} id={id} name={name} />
+      ))}
+
+      <Button className="w-full">
+        <LuPlusCircle className="mr-2 h-4 w-4" />
+        New Category
+      </Button>
+    </div>
   );
 };
 
@@ -206,7 +212,7 @@ const Settings = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex flex-row items-center gap-2 rounded-xl p-3 font-mono font-medium hover:bg-neutral-100">
+      <DropdownMenuTrigger className="flex flex-row items-center gap-2 rounded-xl p-3 font-mono font-medium transition-colors hover:bg-neutral-100">
         <LuSettings className="h-5 w-5 text-neutral-900" />
         Settings
       </DropdownMenuTrigger>
