@@ -25,7 +25,6 @@ export const cvRouter = createTRPCRouter({
             })
             .returning({ id: cv.id });
           const cvId = cvRow[0]!.id;
-
           // Upsert Fields
           const fieldPaths = flattenObject(input);
           const fields = await tx

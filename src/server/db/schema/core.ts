@@ -1,7 +1,9 @@
 import { createTable } from "~/server/db/schema/create-table";
 import {
   boolean,
+  foreignKey,
   integer,
+  primaryKey,
   serial,
   text,
   timestamp,
@@ -20,23 +22,35 @@ export const resume = createTable("resume", {
   lastUpdated: timestamp("last_updated"),
 });
 
-export const field = createTable("field", {
-  id: serial("id").primaryKey(),
-  cvId: integer("cv_id").references(() => cv.id, { onDelete: "cascade" }),
-  resumeId: integer("resume_id").references(() => resume.id, {
-    onDelete: "cascade",
-  }), // Optional
-  field: varchar("field", { length: 255 }).unique(),
-  value: text("value"),
-});
+export const field = createTable(
+  "field",
+  {
+    cvId: integer("cv_id").references(() => cv.id, { onDelete: "cascade" }),
+    resumeId: integer("resume_id").references(() => resume.id, {
+      onDelete: "cascade",
+    }), // Optional
+    field: varchar("field", { length: 255 }).unique(),
+    value: text("value"),
+  },
+  (table) => ({ pk: primaryKey({ columns: [table.cvId, table.field] }) }),
+);
 
-export const fieldState = createTable("field_state", {
-  id: serial("id").primaryKey(),
-  resumeId: integer("resume_id").references(() => resume.id, {
-    onDelete: "cascade",
+export const fieldState = createTable(
+  "field_state",
+  {
+    id: serial("id").primaryKey(),
+    cvId: integer("cv_id"),
+    resumeId: integer("resume_id").references(() => resume.id, {
+      onDelete: "cascade",
+    }),
+    field: varchar("field", { length: 255 }),
+    active: boolean("active"),
+  },
+  (table) => ({
+    fieldReference: foreignKey({
+      columns: [table.cvId, table.field],
+      foreignColumns: [field.cvId, field.field],
+      name: "field_fk",
+    }),
   }),
-  fieldId: integer("field_id").references(() => field.id, {
-    onDelete: "cascade",
-  }),
-  active: boolean("active"),
-});
+);
