@@ -2,7 +2,7 @@
 
 import { type PropsWithChildren } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { type IconType } from "react-icons/lib";
 import {
   LuFeather,
@@ -33,11 +33,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { useResumeCategories } from "~/hooks/useResumeCategories";
 
 const MOCK_CATEGORIES = [
-  { id: "0", name: "Frontend" },
-  { id: "1", name: "Backend" },
-  { id: "2", name: "Full-stack" },
+  { id: 0, name: "Frontend" },
+  { id: 1, name: "Backend" },
+  { id: 2, name: "Full-stack" },
 ];
 
 export const NavigationPanel = () => {
@@ -147,24 +148,12 @@ const ResumeTooltip = () => {
 };
 
 interface CategoryProps {
-  id: string;
+  id: number;
   name: string;
 }
 
 const Category: React.FC<CategoryProps> = ({ id, name }) => {
-  const router = useRouter();
-
-  const handleEdit = () => {
-    router.push(`/resume/${id}`);
-  };
-
-  const handleDownload = () => {
-    // TODO: Implement
-  };
-
-  const handleDelete = () => {
-    // TODO: Implement
-  };
+  const { handleEdit, handleDownload, handleDelete } = useResumeCategories(id);
 
   return (
     <div className="flex flex-row gap-x-2">
