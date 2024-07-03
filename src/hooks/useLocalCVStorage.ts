@@ -24,7 +24,7 @@ const getFromLocal = (key: string) => {
 
 export const useLocalCVStorage = () => {
   const { user } = useUser();
-  const key = user?.id !== undefined ? queryKeys.cv(user.id, 0) : undefined;
+  const key = user?.id !== undefined ? queryKeys.cv(user.id) : undefined;
 
   const query = useQuery<DatedCVSchema>({
     queryKey: ["local", key],
