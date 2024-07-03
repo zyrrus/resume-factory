@@ -7,7 +7,7 @@ import { LoadingSpinner } from "~/components/loading-spinner";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { useCVStorage } from "~/hooks/useCVStorage";
+import { useLocalCVStorage } from "~/hooks/useLocalCVStorage";
 
 type ResumeKeys = "0" | "1" | "2";
 const getResume: Record<ResumeKeys, string> = {
@@ -17,7 +17,7 @@ const getResume: Record<ResumeKeys, string> = {
 };
 
 export default function Page({ params }: { params: { id: ResumeKeys } }) {
-  const { isLoading, data: localCV } = useCVStorage();
+  const { isLoading, data: localCV } = useLocalCVStorage();
 
   const resumeName = getResume[params.id];
 

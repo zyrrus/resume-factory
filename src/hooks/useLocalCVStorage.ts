@@ -1,7 +1,11 @@
+"use client";
+
+import { useUser } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import merge from "lodash.merge";
 import { type DeepPartial } from "react-hook-form";
 import { toast } from "sonner";
+import { queryKeys } from "~/lib/query-keys";
 import {
   type ResumeFormSchema,
   defaultValues,
@@ -10,17 +14,17 @@ import {
 
 type CVSchema = ResumeFormSchema & { lastUpdated?: string };
 
-export const useCVStorage = () => {
+export const useLocalCVStorage = () => {
+  const { user } = useUser();
+  const key = user?.id !== undefined ? queryKeys.cv(user.id, 0) : undefined;
+
   const query = useQuery<CVSchema>({
-    queryKey: ["cv"],
+    queryKey: [key],
     queryFn: () => {
       const localCV = getFromLocal();
-      // TODO: const remoteCV = getFromRemote();
-
-      const newestCV = localCV; // TODO: remoteCV?.lastUpdated < localCV?.lastUpdated ? localCV : remoteCV;
-
-      return newestCV;
+      return localCV;
     },
+    enabled: key !== undefined,
   });
 
   const getFromLocal = () => {
@@ -33,10 +37,15 @@ export const useCVStorage = () => {
   };
 
   const saveToLocal = (value: DeepPartial<ResumeFormSchema>) => {
+    if (!key) {
+      toast.error("Error: tried to save CV without a key");
+      return;
+    }
+
     const parsed = resumeFormSchema.safeParse(value);
     if (parsed.success && parsed.data) {
       localStorage.setItem(
-        "cv",
+        key,
         JSON.stringify({
           ...parsed.data,
           lastUpdated: new Date().toISOString(),
@@ -44,7 +53,7 @@ export const useCVStorage = () => {
       );
     } else {
       toast.error("There was an issue while autosaving. Check the console.");
-      console.log("ERROR", parsed.error.message);
+      console.error(parsed.error.message);
     }
   };
 

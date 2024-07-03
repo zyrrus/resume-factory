@@ -3,10 +3,10 @@
 import { ResumeForm } from "~/components/form/resume-form";
 import { LoadingSpinner } from "~/components/loading-spinner";
 import { Separator } from "~/components/ui/separator";
-import { useCVStorage } from "~/hooks/useCVStorage";
+import { useLocalCVStorage } from "~/hooks/useLocalCVStorage";
 
 export default function Page() {
-  const { isLoading, data: localCV } = useCVStorage();
+  const { isLoading, data: localCV } = useLocalCVStorage();
 
   return (
     <main className="container flex max-w-2xl flex-col gap-5 py-16">
