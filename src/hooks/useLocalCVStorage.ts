@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import merge from "lodash.merge";
 import { type DeepPartial } from "react-hook-form";
 import { toast } from "sonner";
-import { queryKeys } from "~/lib/query-keys";
+import { queryKeys } from "~/lib/utils/query-keys";
 import {
   type DatedCVSchema,
   type ResumeFormSchema,
