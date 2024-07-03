@@ -65,6 +65,7 @@ export const resumeFormSchema = z.object({
  * This is the Resume Factory CV form as a type
  */
 export type ResumeFormSchema = z.infer<typeof resumeFormSchema>;
+export type DatedCVSchema = ResumeFormSchema & { lastUpdated?: string };
 
 /**
  * This is all the default values for the Resume Factory CV form

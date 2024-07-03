@@ -7,38 +7,37 @@ import { type DeepPartial } from "react-hook-form";
 import { toast } from "sonner";
 import { queryKeys } from "~/lib/query-keys";
 import {
+  type DatedCVSchema,
   type ResumeFormSchema,
   defaultValues,
   resumeFormSchema,
 } from "~/lib/schemas/resume-form-schema";
 
-type CVSchema = ResumeFormSchema & { lastUpdated?: string };
+const getFromLocal = (key: string) => {
+  const localCVString = localStorage.getItem(key);
+  if (localCVString) {
+    const localCV = JSON.parse(localCVString) as DeepPartial<DatedCVSchema>;
+    return merge({}, defaultValues, localCV);
+  }
+  return defaultValues;
+};
 
 export const useLocalCVStorage = () => {
   const { user } = useUser();
   const key = user?.id !== undefined ? queryKeys.cv(user.id, 0) : undefined;
 
-  const query = useQuery<CVSchema>({
-    queryKey: [key],
+  const query = useQuery<DatedCVSchema>({
+    queryKey: ["local", key],
     queryFn: () => {
-      const localCV = getFromLocal();
+      const localCV = getFromLocal(key!);
       return localCV;
     },
     enabled: key !== undefined,
   });
 
-  const getFromLocal = () => {
-    const localCVString = localStorage.getItem("cv");
-    if (localCVString) {
-      const localCV = JSON.parse(localCVString) as DeepPartial<CVSchema>;
-      return merge({}, defaultValues, localCV);
-    }
-    return defaultValues;
-  };
-
   const saveToLocal = (value: DeepPartial<ResumeFormSchema>) => {
     if (!key) {
-      toast.error("Error: tried to save CV without a key");
+      toast.error("Error: tried to save CV without a key.");
       return;
     }
 
@@ -52,7 +51,9 @@ export const useLocalCVStorage = () => {
         }),
       );
     } else {
-      toast.error("There was an issue while autosaving. Check the console.");
+      toast.error(
+        "There was an issue while autosaving locally. Check the console.",
+      );
       console.error(parsed.error.message);
     }
   };
