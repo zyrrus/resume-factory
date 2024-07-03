@@ -5,7 +5,6 @@ const stringField = z.string().trim().optional();
 const arrayField = z
   .array(
     z.object({
-      order: z.number(),
       value: z.string().trim(),
     }),
   )
@@ -34,7 +33,6 @@ export const resumeFormSchema = z.object({
   education: z.array(
     z
       .object({
-        order: z.number(),
         school: stringField,
         degree: stringField,
         gpa: stringField,
@@ -48,7 +46,6 @@ export const resumeFormSchema = z.object({
   experience: z.array(
     z
       .object({
-        order: z.number(),
         role: stringField,
         employer: stringField,
         description: arrayField,
@@ -58,7 +55,6 @@ export const resumeFormSchema = z.object({
   ),
   projects: z.array(
     z.object({
-      order: z.number(),
       title: stringField,
       description: arrayField,
     }),
@@ -78,18 +74,8 @@ export const defaultValues: ResumeFormSchema = {
   name: "",
   email: "",
   phone: "",
-  languages: [
-    {
-      value: "",
-      order: 0,
-    },
-  ],
-  urls: [
-    {
-      value: "",
-      order: 0,
-    },
-  ],
+  languages: [{ value: "" }],
+  urls: [{ value: "" }],
   education: [
     {
       school: "",
@@ -98,27 +84,11 @@ export const defaultValues: ResumeFormSchema = {
       endDate: "",
       isOngoing: false,
       gpa: "",
-      order: 0,
     },
   ],
-  awards: [
-    {
-      value: "",
-      order: 0,
-    },
-  ],
-  certificates: [
-    {
-      value: "",
-      order: 0,
-    },
-  ],
-  skills: [
-    {
-      value: "",
-      order: 0,
-    },
-  ],
+  awards: [{ value: "" }],
+  certificates: [{ value: "" }],
+  skills: [{ value: "" }],
   experience: [
     {
       role: "",
@@ -126,25 +96,13 @@ export const defaultValues: ResumeFormSchema = {
       startDate: "",
       endDate: "",
       isOngoing: false,
-      description: [
-        {
-          value: "",
-          order: 0,
-        },
-      ],
-      order: 0,
+      description: [{ value: "" }],
     },
   ],
   projects: [
     {
       title: "",
-      description: [
-        {
-          value: "",
-          order: 0,
-        },
-      ],
-      order: 0,
+      description: [{ value: "" }],
     },
   ],
 };
