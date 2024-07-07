@@ -36,3 +36,26 @@ export const flattenObject = (
 
   return result;
 };
+
+export const unflattenObject = (obj: FlattenedObject): unknown => {
+  const result: unknown = {};
+
+  for (const key in obj) {
+    const value = obj[key];
+    const keys = key.split(".");
+    let currentLevel = result as Record<string, unknown>;
+
+    keys.forEach((k, index) => {
+      if (index === keys.length - 1) {
+        currentLevel[k] = value;
+      } else {
+        if (!currentLevel[k]) {
+          currentLevel[k] = isNaN(Number(keys[index + 1])) ? {} : [];
+        }
+        currentLevel = currentLevel[k] as Record<string, unknown>;
+      }
+    });
+  }
+
+  return result;
+};

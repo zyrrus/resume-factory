@@ -1,7 +1,6 @@
 import { createTable } from "~/server/db/schema/create-table";
 import {
   boolean,
-  foreignKey,
   integer,
   primaryKey,
   serial,
@@ -11,46 +10,38 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const cv = createTable("cv", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().unique(), // "Foreign key" from Clerk
-  lastUpdated: timestamp("last_updated"),
+  uid: varchar("uid", { length: 255 }).primaryKey(), // "FK" from Clerk
+  lastUpdated: timestamp("last_updated").notNull().defaultNow(),
 });
 
 export const resume = createTable("resume", {
-  id: serial("id").primaryKey(),
-  cvId: integer("cv_id").references(() => cv.id, { onDelete: "cascade" }),
-  lastUpdated: timestamp("last_updated"),
+  uid: serial("uid").primaryKey(), // Unique among all resumes
+  cvUid: varchar("cv_uid", { length: 255 })
+    .notNull()
+    .references(() => cv.uid, { onDelete: "cascade" }), // FK
+  lastUpdated: timestamp("last_updated").notNull().defaultNow(),
 });
 
-export const field = createTable(
-  "field",
-  {
-    cvId: integer("cv_id").references(() => cv.id, { onDelete: "cascade" }),
-    resumeId: integer("resume_id").references(() => resume.id, {
-      onDelete: "cascade",
-    }), // Optional
-    field: varchar("field", { length: 255 }).unique(),
-    value: text("value"),
-  },
-  (table) => ({ pk: primaryKey({ columns: [table.cvId, table.field] }) }),
-);
+export const field = createTable("field", {
+  field: varchar("field", { length: 255 }).primaryKey(),
+  cvUid: varchar("cv_uid", { length: 255 })
+    .notNull()
+    .references(() => cv.uid, { onDelete: "cascade" }), // FK
+  value: text("value"),
+});
 
 export const fieldState = createTable(
   "field_state",
   {
-    id: serial("id").primaryKey(),
-    cvId: integer("cv_id"),
-    resumeId: integer("resume_id").references(() => resume.id, {
-      onDelete: "cascade",
-    }),
-    field: varchar("field", { length: 255 }),
+    resumeUid: integer("resume_uid")
+      .notNull()
+      .references(() => resume.uid, { onDelete: "cascade" }), // FK
+    field: varchar("field", { length: 255 })
+      .notNull()
+      .references(() => field.field, { onDelete: "cascade" }), // FK
     active: boolean("active"),
   },
   (table) => ({
-    fieldReference: foreignKey({
-      columns: [table.cvId, table.field],
-      foreignColumns: [field.cvId, field.field],
-      name: "field_fk",
-    }),
+    pk: primaryKey({ columns: [table.field, table.resumeUid] }),
   }),
 );
