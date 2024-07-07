@@ -12,16 +12,19 @@ import { api } from "~/trpc/react";
 
 export const useRemoteCVStorage = () => {
   const { user } = useUser();
-  const key = user?.id !== undefined ? queryKeys.cv(user.id, 0) : undefined;
+  const key = user?.id !== undefined ? queryKeys.cv(user.id) : undefined;
 
-  const query = api.cv.load.useQuery(
-    // id = 0 by default to support multiple CVs in the future
-    { id: 0 },
-    { enabled: false },
-  );
+  const query = api.cv.load.useQuery(undefined, { enabled: false });
 
-  const { mutateAsync } = api.cv.save.useMutation();
-  const saveToRemote = async (value: DeepPartial<ResumeFormSchema>) => {
+  const { mutate } = api.cv.save.useMutation({
+    onError: (error) => {
+      toast.error(
+        "There was an issue while autosaving remotely. Check the console for more details.",
+      );
+      console.error(error.message);
+    },
+  });
+  const saveToRemote = (value: DeepPartial<ResumeFormSchema>) => {
     if (!key) {
       toast.error("Error: tried to save CV without a key.");
       return;
@@ -29,14 +32,14 @@ export const useRemoteCVStorage = () => {
 
     const parsed = resumeFormSchema.safeParse(value);
     if (parsed.success && parsed.data) {
-      await mutateAsync(parsed.data);
+      mutate(parsed.data);
     } else {
       toast.error(
-        "There was an issue while autosaving remotely. Check the console.",
+        "There was an issue with the formatting of your inputs. Check the console for more details.",
       );
       console.error(parsed.error.message);
     }
   };
 
-  return { ...query, saveToRemote };
+  return { query, remoteCV: query.data, saveToRemote };
 };
