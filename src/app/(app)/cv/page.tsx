@@ -6,7 +6,7 @@ import { Separator } from "~/components/ui/separator";
 import { useLocalCVStorage } from "~/hooks/useLocalCVStorage";
 
 export default function Page() {
-  const { isLoading, data: localCV } = useLocalCVStorage();
+  const { query, localCV } = useLocalCVStorage();
 
   return (
     <main className="container flex max-w-2xl flex-col gap-5 py-16">
@@ -18,7 +18,7 @@ export default function Page() {
         </p>
       </div>
       <Separator orientation="horizontal" />
-      {isLoading || !localCV ? (
+      {query.isLoading || !localCV ? (
         <div className="flex flex-1 flex-row items-center gap-x-4 self-center font-mono text-neutral-800">
           <LoadingSpinner />
           <p>loading your CV...</p>

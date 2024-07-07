@@ -58,5 +58,5 @@ export const useLocalCVStorage = () => {
     }
   };
 
-  return { ...query, saveToLocal };
+  return { query, localCV: query.data, saveToLocal };
 };
