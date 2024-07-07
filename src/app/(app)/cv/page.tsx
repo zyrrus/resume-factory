@@ -3,7 +3,7 @@
 import { ResumeForm } from "~/components/form/resume-form";
 import { LoadingSpinner } from "~/components/loading-spinner";
 import { Separator } from "~/components/ui/separator";
-import { useLocalCVStorage } from "~/hooks/useLocalCVStorage";
+import { useLocalCVStorage } from "~/hooks/cv/useLocalCVStorage";
 
 export default function Page() {
   const { query, localCV } = useLocalCVStorage();

@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import debounce from "lodash.debounce";
 import { useFormContext } from "react-hook-form";
 import { type ResumeFormSchema } from "~/lib/schemas/resume-form-schema";
-import { useLocalCVStorage } from "~/hooks/useLocalCVStorage";
+import { useLocalCVStorage } from "~/hooks/cv/useLocalCVStorage";
 
 /**
  * debounced delay between saves, passed to lodash debounce wait parameter

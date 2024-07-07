@@ -7,7 +7,7 @@ import { LoadingSpinner } from "~/components/loading-spinner";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { useLocalCVStorage } from "~/hooks/useLocalCVStorage";
+import { useLocalCVStorage } from "~/hooks/cv/useLocalCVStorage";
 
 type ResumeKeys = "0" | "1" | "2";
 const getResume: Record<ResumeKeys, string> = {
@@ -17,7 +17,7 @@ const getResume: Record<ResumeKeys, string> = {
 };
 
 export default function Page({ params }: { params: { id: ResumeKeys } }) {
-  const { isLoading, data: localCV } = useLocalCVStorage();
+  const { query, localCV } = useLocalCVStorage();
 
   const resumeName = getResume[params.id];
 
@@ -36,7 +36,7 @@ export default function Page({ params }: { params: { id: ResumeKeys } }) {
           </p>
         </div>
         <Separator orientation="horizontal" />
-        {isLoading || !localCV ? (
+        {query.isLoading || !localCV ? (
           <div className="flex flex-1 flex-row items-center gap-x-4 self-center font-mono text-neutral-800">
             <LoadingSpinner />
             <p>loading your CV...</p>
