@@ -24,27 +24,31 @@ const getFromLocal = (key: string) => {
 
 export const useLocalCVStorage = () => {
   const { user } = useUser();
-  const key = user?.id !== undefined ? queryKeys.cv(user.id) : undefined;
+  const key =
+    user?.id !== undefined ? queryKeys.cv("local", user.id) : undefined;
 
   const query = useQuery<DatedCVSchema>({
-    queryKey: ["local", key],
+    queryKey: key!,
     queryFn: () => {
-      const localCV = getFromLocal(key!);
+      console.log("SAVING LOCALLY");
+      const localCV = getFromLocal(key![1]);
       return localCV;
     },
     enabled: key !== undefined,
   });
 
   const saveToLocal = (value: DeepPartial<ResumeFormSchema>) => {
-    if (!key) {
-      toast.error("Error: tried to save CV without a key.");
+    if (!user?.id) {
+      toast.error("Error: must be logged in to save CV locally.");
       return;
     }
+
+    const storageKey = queryKeys.cvStorageKey(user.id);
 
     const parsed = resumeFormSchema.safeParse(value);
     if (parsed.success && parsed.data) {
       localStorage.setItem(
-        key,
+        storageKey,
         JSON.stringify({
           ...parsed.data,
           lastUpdated: new Date().toISOString(),
