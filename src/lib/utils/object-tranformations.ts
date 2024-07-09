@@ -37,6 +37,22 @@ export const flattenObject = (
   return result;
 };
 
+const convertValue = (value?: string): string | Date | boolean | undefined => {
+  // Check if value is undefined
+  if (value === undefined) return undefined;
+
+  // Check if value is a valid boolean
+  if (value === "true") return true;
+  if (value === "false") return false;
+
+  // Check if value is a valid Date
+  const date = new Date(value);
+  if (!isNaN(date.getTime())) return date;
+
+  // Return the value as is (string)
+  return value;
+};
+
 export const unflattenObject = (obj: FlattenedObject): unknown => {
   const result: unknown = {};
 
@@ -47,7 +63,7 @@ export const unflattenObject = (obj: FlattenedObject): unknown => {
 
     keys.forEach((k, index) => {
       if (index === keys.length - 1) {
-        currentLevel[k] = value;
+        currentLevel[k] = convertValue(value);
       } else {
         if (!currentLevel[k]) {
           currentLevel[k] = isNaN(Number(keys[index + 1])) ? {} : [];
