@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import merge from "lodash.merge";
 import { type DeepPartial } from "react-hook-form";
 import { toast } from "sonner";
@@ -17,7 +17,7 @@ const getFromLocal = (key: string) => {
   const localCVString = localStorage.getItem(key);
   if (localCVString) {
     const localCV = JSON.parse(localCVString) as DeepPartial<DatedCVSchema>;
-    return merge({}, defaultValues, localCV);
+    return merge({}, localCV, defaultValues);
   }
   return defaultValues;
 };
@@ -31,15 +31,20 @@ export const useLocalCVStorage = () => {
     queryKey: key!,
     enabled: key !== undefined,
     queryFn: () => {
-      console.log("SAVING LOCALLY");
       const localCV = getFromLocal(key![1]);
       return localCV;
     },
   });
 
+  const queryClient = useQueryClient();
   const saveToLocal = (value: DeepPartial<ResumeFormSchema>) => {
     if (!user?.id) {
-      toast.error("Error: must be logged in to save CV locally.");
+      console.error("Error: must be logged in to save CV locally.");
+      return;
+    }
+
+    if (!key) {
+      console.error("Error: cannot save CV locally without key.");
       return;
     }
 
@@ -47,18 +52,15 @@ export const useLocalCVStorage = () => {
 
     const parsed = resumeFormSchema.safeParse(value);
     if (parsed.success && parsed.data) {
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          ...parsed.data,
-          lastUpdated: new Date().toISOString(),
-        }),
-      );
+      const localData = {
+        ...parsed.data,
+        lastUpdated: new Date().toISOString(),
+      };
+      localStorage.setItem(storageKey, JSON.stringify(localData));
+      queryClient.setQueryData(key, () => localData);
     } else {
-      toast.error(
-        "There was an issue while autosaving locally. Check the console.",
-      );
-      console.error(parsed.error.message);
+      toast.error("There was an issue while autosaving locally.");
+      console.error("Local Parsing Error:", parsed.error.message);
     }
   };
 

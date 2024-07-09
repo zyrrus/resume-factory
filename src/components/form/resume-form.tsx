@@ -23,7 +23,7 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { ArrayField } from "~/components/form/array-field";
 import { DatePicker } from "~/components/form/date-picker";
 import { AutoAnimate } from "~/components/wrappers/auto-animate";
-import { useAutosave } from "~/hooks/useAutosave";
+import { useCVAutosave } from "~/hooks/cv/useCVAutosave";
 
 // TODO: Add grab handles to list fields
 // TODO: Add links to Projects
@@ -170,8 +170,12 @@ export const ResumeForm = ({
 // This a component that calls a hook and renders nothing.
 // The hook needs to be a child of the form context
 const Autosave = () => {
-  useAutosave();
-  return null;
+  const { isSaving, lastSaveDate } = useCVAutosave();
+  return (
+    <p>
+      {isSaving ? "Saving..." : `Last saved: ${lastSaveDate?.toLocaleString()}`}
+    </p>
+  );
 };
 
 const SectionHeader = ({

@@ -39,7 +39,7 @@ export const cvRouter = createTRPCRouter({
     const fields = Object.fromEntries(fieldEntries);
     const remoteCV = unflattenObject(fields) as DeepPartial<DatedCVSchema>;
 
-    return remoteCV;
+    return { ...remoteCV, lastUpdated: cvRow.lastUpdated.toISOString() };
   }),
   save: protectedProcedure
     .input(resumeFormSchema)

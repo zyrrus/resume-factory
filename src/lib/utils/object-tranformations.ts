@@ -37,7 +37,7 @@ export const flattenObject = (
   return result;
 };
 
-const convertValue = (value?: string): string | Date | boolean | undefined => {
+const convertValue = (value?: string): string | boolean | undefined => {
   // Check if value is undefined
   if (value === undefined) return undefined;
 
@@ -45,9 +45,9 @@ const convertValue = (value?: string): string | Date | boolean | undefined => {
   if (value === "true") return true;
   if (value === "false") return false;
 
-  // Check if value is a valid Date
-  const date = new Date(value);
-  if (!isNaN(date.getTime())) return date;
+  // // Check if value is a valid Date
+  // const date = new Date(value);
+  // if (!isNaN(date.getTime())) return date;
 
   // Return the value as is (string)
   return value;

@@ -6,45 +6,36 @@ import {
 } from "~/lib/schemas/resume-form-schema";
 import { useLocalCVStorage } from "~/hooks/cv/useLocalCVStorage";
 import { useRemoteCVStorage } from "~/hooks/cv/useRemoteCVStorage";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "~/lib/utils/query-keys";
-import { useUser } from "@clerk/nextjs";
+import { useMemo } from "react";
 
+/**
+ * Fetches the latest CV out of the local and remote versions
+ */
 export const useCVStorage = () => {
   const { localCV, query: localQuery } = useLocalCVStorage();
   const { remoteCV, query: remoteQuery } = useRemoteCVStorage();
 
-  const { user } = useUser();
-  const key =
-    user?.id !== undefined ? queryKeys.cv("latest", user.id) : undefined;
+  const latestCV = useMemo(() => {
+    let latestCV: DatedCVSchema;
 
-  const query = useQuery({
-    queryKey: key!,
-    enabled:
-      key !== undefined && !localQuery.isLoading && !remoteQuery.isLoading,
-    queryFn: () => {
-      // Should not occur
-      if (!key || localQuery.isLoading || remoteQuery.isLoading) return;
+    // If they both exist, pick the newest one
+    if (localCV && remoteCV) {
+      latestCV =
+        localCV.lastUpdated! > remoteCV.lastUpdated
+          ? localCV
+          : (remoteCV as DatedCVSchema);
+    } else {
+      latestCV =
+        localCV ?? (remoteCV as DatedCVSchema | undefined) ?? defaultValues;
+    }
 
-      let latestCV: DatedCVSchema;
-
-      // If they both exist, pick the newest one
-      if (localCV && remoteCV) {
-        latestCV =
-          localCV.lastUpdated! > remoteCV.lastUpdated!
-            ? localCV
-            : (remoteCV as DatedCVSchema);
-      } else {
-        latestCV =
-          localCV ?? (remoteCV as DatedCVSchema | undefined) ?? defaultValues;
-      }
-
-      return latestCV;
-    },
-  });
+    return latestCV;
+  }, [localCV, remoteCV]);
 
   return {
-    query,
-    latestCV: query.data,
+    query: {
+      isLoading: localQuery.isLoading || remoteQuery.isLoading,
+    },
+    latestCV,
   };
 };

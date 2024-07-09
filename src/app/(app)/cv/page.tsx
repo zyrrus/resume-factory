@@ -3,10 +3,10 @@
 import { ResumeForm } from "~/components/form/resume-form";
 import { LoadingSpinner } from "~/components/loading-spinner";
 import { Separator } from "~/components/ui/separator";
-import { useLocalCVStorage } from "~/hooks/cv/useLocalCVStorage";
+import { useCVStorage } from "~/hooks/cv/useCVStorage";
 
 export default function Page() {
-  const { query, localCV } = useLocalCVStorage();
+  const { query, latestCV } = useCVStorage();
 
   return (
     <main className="container flex max-w-2xl flex-col gap-5 py-16">
@@ -18,13 +18,13 @@ export default function Page() {
         </p>
       </div>
       <Separator orientation="horizontal" />
-      {query.isLoading || !localCV ? (
+      {query.isLoading || !latestCV ? (
         <div className="flex flex-1 flex-row items-center gap-x-4 self-center font-mono text-neutral-800">
           <LoadingSpinner />
           <p>loading your CV...</p>
         </div>
       ) : (
-        <ResumeForm initialValues={localCV} />
+        <ResumeForm initialValues={latestCV} />
       )}
     </main>
   );
