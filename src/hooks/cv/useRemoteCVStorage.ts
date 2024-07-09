@@ -1,9 +1,7 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { type DeepPartial } from "react-hook-form";
 import { toast } from "sonner";
-import { queryKeys } from "~/lib/utils/query-keys";
 import {
   type ResumeFormSchema,
   resumeFormSchema,
@@ -11,9 +9,6 @@ import {
 import { api } from "~/trpc/react";
 
 export const useRemoteCVStorage = () => {
-  const { user } = useUser();
-  const key = user?.id !== undefined ? queryKeys.cv(user.id) : undefined;
-
   const query = api.cv.load.useQuery(undefined, { enabled: false });
 
   const { mutate } = api.cv.save.useMutation({
@@ -24,11 +19,9 @@ export const useRemoteCVStorage = () => {
       console.error(error.message);
     },
   });
+
   const saveToRemote = (value: DeepPartial<ResumeFormSchema>) => {
-    if (!key) {
-      toast.error("Error: tried to save CV without a key.");
-      return;
-    }
+    console.log("SAVING REMOTELY");
 
     const parsed = resumeFormSchema.safeParse(value);
     if (parsed.success && parsed.data) {

@@ -29,12 +29,12 @@ export const useLocalCVStorage = () => {
 
   const query = useQuery<DatedCVSchema>({
     queryKey: key!,
+    enabled: key !== undefined,
     queryFn: () => {
       console.log("SAVING LOCALLY");
       const localCV = getFromLocal(key![1]);
       return localCV;
     },
-    enabled: key !== undefined,
   });
 
   const saveToLocal = (value: DeepPartial<ResumeFormSchema>) => {
