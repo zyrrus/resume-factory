@@ -12,30 +12,38 @@ import { useMemo } from "react";
  * Fetches the latest CV out of the local and remote versions
  */
 export const useCVStorage = () => {
-  const { localCV, query: localQuery } = useLocalCVStorage();
+  // const { localCV, query: localQuery } = useLocalCVStorage();
   const { remoteCV, query: remoteQuery } = useRemoteCVStorage();
 
-  const latestCV = useMemo(() => {
+  const isLoading = /*localQuery.isLoading ||*/ remoteQuery.isLoading;
+
+  const getLatestCV = () => {
     let latestCV: DatedCVSchema;
 
+    if (isLoading) return;
+    return remoteCV ?? defaultValues;
+
     // If they both exist, pick the newest one
-    if (localCV && remoteCV) {
-      latestCV =
-        localCV.lastUpdated! > remoteCV.lastUpdated
-          ? localCV
-          : (remoteCV as DatedCVSchema);
-    } else {
-      latestCV =
-        localCV ?? (remoteCV as DatedCVSchema | undefined) ?? defaultValues;
-    }
+    // if (localCV && remoteCV) {
+    //   latestCV =
+    //     localCV.lastUpdated! > remoteCV.lastUpdated
+    //       ? localCV
+    //       : (remoteCV as DatedCVSchema);
+    // } else {
+    //   latestCV =
+    //     localCV ?? (remoteCV as DatedCVSchema | undefined) ?? defaultValues;
+    // }
 
     return latestCV;
-  }, [localCV, remoteCV]);
+  };
+
+  const latestCV = useMemo(() => {
+    return getLatestCV();
+  }, [/*localCV, */ remoteCV, isLoading]);
 
   return {
-    query: {
-      isLoading: localQuery.isLoading || remoteQuery.isLoading,
-    },
+    query: { isLoading },
     latestCV,
+    getLatestCV,
   };
 };

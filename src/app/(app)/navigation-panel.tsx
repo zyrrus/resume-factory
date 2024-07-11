@@ -34,6 +34,9 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { useResumeCategories } from "~/hooks/useResumeCategories";
+import { useCVStorage } from "~/hooks/cv/useCVStorage";
+import { useRemoteCVStorage } from "~/hooks/cv/useRemoteCVStorage";
+import { useLocalCVStorage } from "~/hooks/cv/useLocalCVStorage";
 
 const MOCK_CATEGORIES = [
   { id: 0, name: "Frontend" },
@@ -43,6 +46,10 @@ const MOCK_CATEGORIES = [
 
 export const NavigationPanel = () => {
   const pathname = usePathname();
+
+  const { localCV } = useLocalCVStorage();
+  const { remoteCV } = useRemoteCVStorage();
+  const { latestCV } = useCVStorage();
 
   return (
     <div className="sticky top-0 hidden h-screen w-full max-w-xs p-4 md:flex">
@@ -64,6 +71,21 @@ export const NavigationPanel = () => {
 
         {/* Resumes */}
         <Resumes />
+
+        <div className="text-xs">
+          <p className="font-bold">
+            {latestCV?.name},{" "}
+            {new Date(latestCV?.lastUpdated).toLocaleTimeString()}
+          </p>
+          <p>
+            R: {remoteCV?.name},{" "}
+            {new Date(remoteCV?.lastUpdated).toLocaleTimeString()}
+          </p>
+          <p>
+            L: {localCV?.name},{" "}
+            {new Date(localCV?.lastUpdated).toLocaleTimeString()}
+          </p>
+        </div>
 
         <div className="flex-1" />
 
@@ -109,6 +131,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   );
 };
 
+// TODO: Make these look like the CV NavLink. Move dots button inside
 const Resumes = () => {
   return (
     <div className="flex flex-col gap-y-2">

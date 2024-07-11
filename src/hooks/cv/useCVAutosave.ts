@@ -2,10 +2,9 @@
 
 import { useLocalCVStorage } from "~/hooks/cv/useLocalCVStorage";
 import { useRemoteCVStorage } from "~/hooks/cv/useRemoteCVStorage";
-import { useCVStorage } from "~/hooks/cv/useCVStorage";
 import { useFormContext } from "react-hook-form";
 import { type ResumeFormSchema } from "~/lib/schemas/resume-form-schema";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import debounce from "lodash.debounce";
 import isEqual from "lodash.isequal";
 
@@ -13,7 +12,7 @@ import isEqual from "lodash.isequal";
  * Combines the local and remote autosave functionality
  */
 export const useCVAutosave = () => {
-  useLocalCVAutosave();
+  // useLocalCVAutosave();
   return useRemoteCVAutosave();
 };
 
@@ -45,43 +44,55 @@ const useLocalCVAutosave = (debounceSaveDelay = 250, maxSaveDelay = 2500) => {
 };
 
 const useRemoteCVAutosave = () => {
-  const { latestCV } = useCVStorage();
   const { remoteCV, saveToRemote, query: remoteQuery } = useRemoteCVStorage();
 
-  const save = useCallback(() => {
-    saveToRemote(latestCV);
-  }, [latestCV]);
-
-  const isDirty = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    return !isEqual(latestCV, remoteCV);
-  }, [JSON.stringify(latestCV), JSON.stringify(remoteCV)]);
+  const form = useFormContext<ResumeFormSchema>();
 
   /**
    * Call saveToRemote() after a 1 minute timer if dirty
    * Cancel timer otherwise
    */
   useEffect(() => {
-    let timerId: NodeJS.Timeout | undefined = undefined;
-
-    if (isDirty && timerId === undefined) {
-      console.log("STARTING TIMER");
-      timerId = setTimeout(save, 5000);
-    }
-
-    return () => {
+    let timerId: NodeJS.Timeout;
+    const clearTimer = () => {
       if (timerId) {
-        console.log("CANCELLED TIMER");
+        console.log("<=== CANCELLED TIMER");
         clearTimeout(timerId);
       }
     };
-  }, [isDirty]);
+
+    const { unsubscribe } = form.watch((formValues) => {
+      try {
+        if (!remoteCV) {
+          console.error("NO REMOTE");
+          return;
+        }
+
+        const { lastUpdated, ...remoteWithoutDate } = remoteCV;
+        const isDirty = !isEqual(formValues, remoteWithoutDate);
+
+        if (isDirty) {
+          clearTimer();
+          console.log("===> STARTING TIMER");
+          timerId = setTimeout(() => {
+            saveToRemote(formValues as ResumeFormSchema);
+          }, 3000);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    });
+
+    return () => {
+      clearTimer();
+      unsubscribe();
+    };
+  }, [form.watch]);
 
   return {
     isSaving: remoteQuery.isLoading,
     lastSaveDate: remoteQuery.data?.lastUpdated
       ? new Date(remoteQuery.data.lastUpdated)
       : undefined,
-    save,
   };
 };
