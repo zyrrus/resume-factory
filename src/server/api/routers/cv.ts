@@ -1,6 +1,7 @@
 import { and, eq, like, sql } from "drizzle-orm";
 import {
   type DatedCVSchema,
+  defaultValues,
   resumeFormSchema,
 } from "~/lib/schemas/resume-form-schema";
 
@@ -20,8 +21,7 @@ export const cvRouter = createTRPCRouter({
     });
 
     if (!cvRow) {
-      // TODO: Throw error: CV not found
-      return;
+      return defaultValues;
     }
 
     // Get all fields
