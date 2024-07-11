@@ -11,8 +11,8 @@ import {
   flattenObject,
   unflattenObject,
 } from "~/lib/utils/object-tranformations";
-import { type DeepPartial } from "react-hook-form";
 import { removePrefix } from "~/lib/utils/strings";
+import merge from "lodash.merge";
 
 export const cvRouter = createTRPCRouter({
   load: protectedProcedure.query(async ({ ctx }) => {
@@ -21,7 +21,10 @@ export const cvRouter = createTRPCRouter({
     });
 
     if (!cvRow) {
-      return defaultValues;
+      return {
+        ...defaultValues,
+        lastUpdated: new Date().toISOString(),
+      } as DatedCVSchema;
     }
 
     // Get all fields
@@ -37,9 +40,12 @@ export const cvRouter = createTRPCRouter({
         [removePrefix(field, prefix), value ?? ""] as [string, string],
     );
     const fields = Object.fromEntries(fieldEntries);
-    const remoteCV = unflattenObject(fields) as DeepPartial<DatedCVSchema>;
+    const remoteCV = merge({}, unflattenObject(fields), defaultValues);
 
-    return { ...remoteCV, lastUpdated: cvRow.lastUpdated.toISOString() };
+    return {
+      ...remoteCV,
+      lastUpdated: cvRow.lastUpdated.toISOString(),
+    } as DatedCVSchema;
   }),
   save: protectedProcedure
     .input(resumeFormSchema)

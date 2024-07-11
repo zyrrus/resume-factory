@@ -1,6 +1,5 @@
 "use client";
 
-import { type DeepPartial } from "react-hook-form";
 import { toast } from "sonner";
 import {
   type ResumeFormSchema,
@@ -19,7 +18,7 @@ export const useRemoteCVStorage = () => {
   });
 
   const utils = api.useUtils();
-  const saveToRemote = (value: DeepPartial<ResumeFormSchema>) => {
+  const saveToRemote = (value: ResumeFormSchema) => {
     const parsed = resumeFormSchema.safeParse(value);
     if (parsed.success && parsed.data) {
       mutate(parsed.data, {
