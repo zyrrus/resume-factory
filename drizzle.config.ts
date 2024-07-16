@@ -5,8 +5,9 @@ import { env } from "~/env";
 export default {
   schema: "./src/server/db/schema/index.ts",
   driver: "pg",
+  out: "./drizzle/",
   dbCredentials: {
     connectionString: env.POSTGRES_URL,
   },
-  tablesFilter: ["resume-factory_*"],
+  tablesFilter: ["rf_*"],
 } satisfies Config;
