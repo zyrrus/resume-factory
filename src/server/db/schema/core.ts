@@ -20,6 +20,7 @@ export const resume = createTable("resume", {
     .notNull()
     .references(() => cv.uid, { onDelete: "cascade" }), // FK
   lastUpdated: timestamp("last_updated").notNull().defaultNow(),
+  name: text("name").notNull(),
 });
 
 export const field = createTable("field", {

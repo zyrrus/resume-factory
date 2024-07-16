@@ -1,4 +1,5 @@
 import { cvRouter } from "~/server/api/routers/cv";
+import { resumeRouter } from "~/server/api/routers/resumes";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -8,6 +9,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   cv: cvRouter,
+  resumes: resumeRouter,
 });
 
 // export type definition of API
