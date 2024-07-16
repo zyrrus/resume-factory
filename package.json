@@ -36,6 +36,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "dayjs": "^1.11.11",
     "drizzle-orm": "^0.29.4",
     "framer-motion": "^11.2.5",
     "lodash.debounce": "^4.0.8",

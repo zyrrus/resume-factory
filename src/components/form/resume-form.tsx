@@ -24,6 +24,7 @@ import { ArrayField } from "~/components/form/array-field";
 import { DatePicker } from "~/components/form/date-picker";
 import { AutoAnimate } from "~/components/wrappers/auto-animate";
 import { useCVAutosave } from "~/hooks/cv/useCVAutosave";
+import { getRelativeTime } from "~/lib/utils/dates";
 
 // TODO: Add grab handles to list fields
 // TODO: Add links to Projects
@@ -171,9 +172,14 @@ export const ResumeForm = ({
 // The hook needs to be a child of the form context
 const Autosave = () => {
   const { isSaving, lastSaveDate } = useCVAutosave();
+
+  const lastSaved = lastSaveDate
+    ? `Last saved: ${getRelativeTime(lastSaveDate)} (${lastSaveDate.toLocaleString()})`
+    : "";
+
   return (
-    <p>
-      {isSaving ? "Saving..." : `Last saved: ${lastSaveDate?.toLocaleString()}`}
+    <p className="text-sm text-neutral-700">
+      {isSaving ? "Saving..." : lastSaved}
     </p>
   );
 };
