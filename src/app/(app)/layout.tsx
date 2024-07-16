@@ -1,5 +1,5 @@
 import { type PropsWithChildren } from "react";
-import { NavigationPanel } from "./navigation-panel";
+import { NavigationPanel } from "./_side-panel/navigation-panel";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
