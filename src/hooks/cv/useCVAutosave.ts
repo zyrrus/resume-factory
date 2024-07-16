@@ -56,26 +56,26 @@ const useRemoteCVAutosave = () => {
     let timerId: NodeJS.Timeout;
     const clearTimer = () => {
       if (timerId) {
-        console.log("<=== CANCELLED TIMER");
         clearTimeout(timerId);
       }
     };
 
     const { unsubscribe } = form.watch((formValues) => {
       try {
-        if (!remoteCV) {
+        if (!remoteCV || remoteQuery.isLoading) {
           console.error("NO REMOTE");
           return;
         }
 
-        const { lastUpdated, ...remoteWithoutDate } = remoteCV;
-        const isDirty = !isEqual(formValues, remoteWithoutDate);
+        const { lastUpdated: formDate, ...formWithoutDate } =
+          formValues as ResumeFormSchema & { lastUpdated?: string };
+        const { lastUpdated: remoteDate, ...remoteWithoutDate } = remoteCV;
+        const isDirty = !isEqual(formWithoutDate, remoteWithoutDate);
 
         if (isDirty) {
           clearTimer();
-          console.log("===> STARTING TIMER");
           timerId = setTimeout(() => {
-            saveToRemote(formValues as ResumeFormSchema);
+            saveToRemote(formWithoutDate as ResumeFormSchema);
           }, 3000);
         }
       } catch (e) {

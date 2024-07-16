@@ -37,9 +37,7 @@ export const useCVStorage = () => {
     return latestCV;
   };
 
-  const latestCV = useMemo(() => {
-    return getLatestCV();
-  }, [/*localCV, */ remoteCV, isLoading]);
+  const latestCV = useMemo(getLatestCV, [/*localCV, */ remoteCV, isLoading]);
 
   return {
     query: { isLoading },

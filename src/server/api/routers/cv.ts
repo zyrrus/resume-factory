@@ -40,7 +40,7 @@ export const cvRouter = createTRPCRouter({
         [removePrefix(field, prefix), value ?? ""] as [string, string],
     );
     const fields = Object.fromEntries(fieldEntries);
-    const remoteCV = merge({}, unflattenObject(fields), defaultValues);
+    const remoteCV = merge({}, defaultValues, unflattenObject(fields));
 
     return {
       ...remoteCV,
