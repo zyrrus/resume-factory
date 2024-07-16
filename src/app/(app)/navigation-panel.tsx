@@ -2,11 +2,9 @@
 
 import { type PropsWithChildren } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { type IconType } from "react-icons/lib";
 import {
   LuFeather,
-  LuFileText,
   LuLogOut,
   LuSettings,
   LuDownload,
@@ -42,8 +40,6 @@ const MOCK_CATEGORIES = [
 ];
 
 export const NavigationPanel = () => {
-  const pathname = usePathname();
-
   return (
     <div className="sticky top-0 hidden h-screen w-full max-w-xs p-4 md:flex">
       <Card className="flex w-full flex-col gap-y-5 p-4">
@@ -51,34 +47,12 @@ export const NavigationPanel = () => {
         <NavLink href="/" icon={LuFeather}>
           Resume Factory
         </NavLink>
-
         <Separator />
-
-        {/* CV */}
-        <div className="space-y-2">
-          <SubHeading>CV</SubHeading>
-          <NavLink href="/cv" icon={LuFileText} isActive={pathname === "/cv"}>
-            Curriculum Vitae
-          </NavLink>
-        </div>
-
-        {/* Resumes */}
         <Resumes />
-
         <div className="flex-1" />
-
-        {/* Settings */}
         <Settings />
       </Card>
     </div>
-  );
-};
-
-const SubHeading: React.FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <p className="flex flex-row items-center gap-x-1 font-mono text-sm font-medium uppercase text-neutral-800">
-      {children}
-    </p>
   );
 };
 
@@ -109,7 +83,14 @@ const NavLink: React.FC<NavLinkProps> = ({
   );
 };
 
-// TODO: Make these look like the CV NavLink. Move dots button inside
+const SubHeading: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <p className="flex flex-row items-center gap-x-1 font-mono text-sm font-medium uppercase text-neutral-800">
+      {children}
+    </p>
+  );
+};
+
 const Resumes = () => {
   return (
     <div className="flex flex-col gap-y-2">
@@ -160,37 +141,45 @@ const Category: React.FC<CategoryProps> = ({ id, name }) => {
     <div className="flex flex-row gap-x-2">
       <Button
         variant="outline"
-        className="flex-1 justify-start gap-x-2 px-3"
+        size="lg"
+        className="flex flex-1 justify-start gap-2 pl-3 pr-1"
         onClick={handleEdit}
       >
         <LuFileEdit className="h-4 w-4" />
         {name}
-      </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-auto size-7 rounded-full hover:bg-neutral-100"
+            >
+              <LuMoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon">
-            <LuMoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="bottom" align="end">
-          <DropdownMenuItem onClick={handleEdit} className="cursor-pointer">
-            <LuFileEdit className="h-4 w-4" />
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleDownload} className="cursor-pointer">
-            <LuDownload className="h-4 w-4" />
-            Download
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={handleDelete}
-            className="cursor-pointer text-destructive-500 focus:bg-destructive-50 focus:text-destructive-700"
-          >
-            <LuTrash className="h-4 w-4" />
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <DropdownMenuContent side="bottom" align="end">
+            <DropdownMenuItem onClick={handleEdit} className="cursor-pointer">
+              <LuFileEdit className="h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleDownload}
+              className="cursor-pointer"
+            >
+              <LuDownload className="h-4 w-4" />
+              Download
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleDelete}
+              className="cursor-pointer text-destructive-500 focus:bg-destructive-50 focus:text-destructive-700"
+            >
+              <LuTrash className="h-4 w-4" />
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </Button>
     </div>
   );
 };
