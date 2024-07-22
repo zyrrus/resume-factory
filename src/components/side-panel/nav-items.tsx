@@ -3,7 +3,7 @@
 import { useAuth } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { LuFileText, LuLogOut, LuSettings } from "react-icons/lu";
-import { NavLink, SubHeading } from "~/app/(app)/_side-panel/shared";
+import { NavLink, SubHeading } from "~/components/side-panel/shared";
 import {
   DropdownMenu,
   DropdownMenuContent,

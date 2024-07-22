@@ -1,9 +1,9 @@
 import { LuFeather } from "react-icons/lu";
 import { Separator } from "~/components/ui/separator";
-import { CV, Settings } from "~/app/(app)/_side-panel/nav-items";
 import { Card } from "~/components/ui/card";
-import { NavLink } from "~/app/(app)/_side-panel/shared";
-import { Resumes } from "~/app/(app)/_side-panel/resumes";
+import { CV, Settings } from "~/components/side-panel/nav-items";
+import { NavLink } from "~/components/side-panel/shared";
+import { Resumes } from "~/components/side-panel/resumes";
 
 export const NavigationPanel = () => {
   return (
