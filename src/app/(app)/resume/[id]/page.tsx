@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { LuDownload } from "react-icons/lu";
-import { Preview } from "~/app/(app)/resume/[id]/preview";
+import { Preview } from "~/components/pdf-preview";
 import { ResumeForm } from "~/components/form/resume-form";
 import { LoadingSpinner } from "~/components/loading-spinner";
 import { Button } from "~/components/ui/button";

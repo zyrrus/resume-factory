@@ -26,9 +26,6 @@ import { AutoAnimate } from "~/components/wrappers/auto-animate";
 import { useCVAutosave } from "~/hooks/cv/useCVAutosave";
 import { getRelativeTime } from "~/lib/utils/dates";
 
-// TODO: Add grab handles to list fields
-// TODO: Add links to Projects
-
 export const ResumeForm = ({
   initialValues,
 }: {
