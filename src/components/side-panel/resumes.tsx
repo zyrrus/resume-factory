@@ -31,7 +31,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { useResumeCategories } from "~/hooks/useResumeCategories";
+import { useResumeCategories } from "~/hooks/resume/useResumeCategories";
 import { api } from "~/trpc/react";
 import { Input } from "~/components/ui/input";
 import { SubHeading } from "~/components/side-panel/shared";
