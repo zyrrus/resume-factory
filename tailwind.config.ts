@@ -85,7 +85,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       aspectRatio: {
-        paper: "1 / 1.414",
+        paper: "70 / 97",
       },
     },
   },
